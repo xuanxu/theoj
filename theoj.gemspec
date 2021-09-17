@@ -23,6 +23,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rdoc_options = ['--main', 'README.md', '--charset=UTF-8']
 
+  s.add_dependency "octokit"
+
   s.add_development_dependency "rake", "~> 13.0.6"
   s.add_development_dependency "rspec", "~> 3.10"
 end
