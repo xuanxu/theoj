@@ -54,7 +54,7 @@ GEM
       faraday (> 0.8, < 2.0)
 
 PLATFORMS
-  x86_64-darwin-19
+  ruby
 
 DEPENDENCIES
   rake (~> 13.0.6)
