@@ -20,7 +20,6 @@ module Theoj
     end
 
     def paper
-
     end
 
     def target_repository
