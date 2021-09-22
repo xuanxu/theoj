@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     theoj (0.0.1)
-      octokit
+      octokit (~> 4.21)
 
 GEM
   remote: https://rubygems.org/
