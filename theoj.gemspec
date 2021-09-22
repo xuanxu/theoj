@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors = ["Juanjo Bazán"]
   s.homepage = 'http://github.com/xuanxu/theoj'
   s.license = "MIT"
-  s.summary = "Editorial objects used by the open journals"
-  s.description = "A library to manage editorial objects used in the open journals' review process"
+  s.summary = "Editorial objects used by the Open Journals"
+  s.description = "A library to manage editorial objects used in the Open Journals' review process"
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/xuanxu/theoj/issues",
     "changelog_uri"     => "https://github.com/xuanxu/theoj/blob/master/CHANGELOG.md",
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rdoc_options = ['--main', 'README.md', '--charset=UTF-8']
 
-  s.add_dependency "octokit"
+  s.add_dependency "octokit", "~> 4.21"
 
   s.add_development_dependency "rake", "~> 13.0.6"
   s.add_development_dependency "rspec", "~> 3.10"
