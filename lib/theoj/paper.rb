@@ -1,4 +1,5 @@
 require 'find'
+require 'yaml'
 
 module Theoj
   class Paper
@@ -7,18 +8,20 @@ module Theoj
     attr_accessor :review_issue
     attr_accessor :repository
     attr_accessor :paper_path
+    attr_accessor :branch
+    attr_accessor :paper_metadata
 
-    def initialize(repository, branch, path = nil)
-      @repository = repository
+    def initialize(repository_url, branch, path = nil)
+      @repository = repository_url
       @branch = branch
       find_paper path
+      load_metadata
     end
 
     def find_paper(path)
       if path.to_s.strip.empty?
         setup_local_repo
         @paper_path = Theoj::Paper.find_paper_path(local_path)
-        cleanup
       else
         @paper_path = path
       end
@@ -43,17 +46,21 @@ module Theoj
       paper_path
     end
 
-    def self.from_repo(repository, branch = "main")
-      Paper.new(repository, branch, nil)
+    def self.from_repo(repository_url, branch = "")
+      Paper.new(repository_url, branch, nil)
+    end
+
+    def cleanup
+      FileUtils.rm_rf(local_path) if Dir.exist?(local_path)
     end
 
     private
       def setup_local_repo
         msg_no_repo = "Downloading of the repository failed. Please make sure the URL is correct."
-        msg_no_branch = "Couldn't check the bibtex because branch name is incorrect: #{paper_branch.to_s}"
+        msg_no_branch = "Couldn't check the bibtex because branch name is incorrect: #{branch.to_s}"
 
-        error = clone_repo(target_repository, local_path) ? nil : msg_no_repo
-        (error = change_branch(paper_branch, local_path) ? nil : msg_no_branch) unless error
+        error = clone_repo(repository, local_path) ? nil : msg_no_repo
+        (error = change_branch(branch, local_path) ? nil : msg_no_branch) unless error
 
         failure(error) if error
         error.nil?
@@ -63,8 +70,12 @@ module Theoj
         @local_path ||= "tmp/#{SecureRandom.hex}"
       end
 
-      def cleanup
-        FileUtils.rm_rf(local_path) if Dir.exist?(local_path)
+      def load_metadata
+        @paper_metadata ||= if paper_path.include?('.tex')
+          YAML.load_file(paper_path.gsub('.tex', '.yml'))
+        else
+          YAML.load_file(paper_path)
+        end
       end
 
       def failure(msg)
