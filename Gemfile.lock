@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    theoj (0.0.1)
+    theoj (0.0.2)
       octokit (~> 4.21)
 
 GEM
@@ -10,7 +10,7 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     diff-lcs (1.4.4)
-    faraday (1.7.2)
+    faraday (1.8.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
