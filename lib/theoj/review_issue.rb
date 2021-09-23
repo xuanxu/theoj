@@ -20,6 +20,7 @@ module Theoj
     end
 
     def paper
+      @paper ||= Theoj::Paper.new(target_repository, paper_branch)
     end
 
     def target_repository

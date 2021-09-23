@@ -2,6 +2,14 @@ describe Theoj::ReviewIssue do
 
   before { disable_github_calls }
 
+  before do
+    @review_issue  = Theoj::ReviewIssue.new("openjournals/reviews", 42)
+    @issue = double(body: "Review Issue 42 \n "+
+                         "<!--target-repository-->https://github.com/myorg/researchsoftware<!--end-target-repository-->" +
+                         "<!--branch-->paperdocs<!--end-branch-->")
+    allow(@review_issue).to receive(:issue).and_return(@issue)
+  end
+
   describe "initialization" do
     it "should create review issue object" do
       repository = "openjournals/reviews"
@@ -17,14 +25,6 @@ describe Theoj::ReviewIssue do
   end
 
   describe "reading the issue" do
-    before do
-      @review_issue  = Theoj::ReviewIssue.new("openjournals/reviews", 42)
-      @issue = double(body: "Review Issue 42 \n "+
-                           "<!--target-repository-->https://github.com/myorg/researchsoftware<!--end-target-repository-->" +
-                           "<!--branch-->paperdocs<!--end-branch-->")
-      allow(@review_issue).to receive(:issue).and_return(@issue)
-    end
-
     it "should read issue_body" do
       expect(@review_issue.issue_body).to eq(@issue.body)
     end
@@ -35,6 +35,14 @@ describe Theoj::ReviewIssue do
 
     it "should read paper_branch" do
       expect(@review_issue.paper_branch).to eq("paperdocs")
+    end
+  end
+
+  describe "paper" do
+    it "should return a Paper object from the target repository" do
+      expect(Theoj::Paper).to receive(:new).with("https://github.com/myorg/researchsoftware", "paperdocs").and_return("ThePaper")
+
+      expect(@review_issue.paper).to eq("ThePaper")
     end
   end
 end
