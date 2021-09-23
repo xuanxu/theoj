@@ -8,7 +8,7 @@ module Theoj
     attr_accessor :launch_date
 
     def initialize(custom_data = {})
-      @data = default_data.merge(custom_data)
+      set_data custom_data
     end
 
     def current_year
@@ -23,6 +23,17 @@ module Theoj
       data[:current_issue] || (1 + ((Time.new.year * 12 + Time.new.month) - (launch_year * 12 + launch_month)))
     end
 
+    private
+
+    def set_data(custom_data)
+      @data = default_data.merge(custom_data)
+      @doi_prefix = data[:doi_prefix]
+      @url = data[:url]
+      @name = data[:name]
+      @alias = data[:alias]
+      @launch_date = data[:launch_date]
+    end
+
     def default_data
       {
         doi_prefix: "10.21105",
@@ -32,8 +43,6 @@ module Theoj
         launch_date: "2016-05-05",
       }
     end
-
-    private
 
     def parsed_launch_date
       @parsed_launch_date ||= Time.parse(data[:launch_date])
