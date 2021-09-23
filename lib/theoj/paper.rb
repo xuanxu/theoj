@@ -18,15 +18,6 @@ module Theoj
       load_metadata
     end
 
-    def find_paper(path)
-      if path.to_s.strip.empty?
-        setup_local_repo
-        @paper_path = Theoj::Paper.find_paper_path(local_path)
-      else
-        @paper_path = path
-      end
-    end
-
     def authors
       []
     end
@@ -54,7 +45,21 @@ module Theoj
       FileUtils.rm_rf(local_path) if Dir.exist?(local_path)
     end
 
+    def local_path
+      @local_path ||= "tmp/#{SecureRandom.hex}"
+    end
+
     private
+
+      def find_paper(path)
+        if path.to_s.strip.empty?
+          setup_local_repo
+          @paper_path = Theoj::Paper.find_paper_path(local_path)
+        else
+          @paper_path = path
+        end
+      end
+
       def setup_local_repo
         msg_no_repo = "Downloading of the repository failed. Please make sure the URL is correct."
         msg_no_branch = "Couldn't check the bibtex because branch name is incorrect: #{branch.to_s}"
@@ -64,10 +69,6 @@ module Theoj
 
         failure(error) if error
         error.nil?
-      end
-
-      def local_path
-        @local_path ||= "tmp/#{SecureRandom.hex}"
       end
 
       def load_metadata
