@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "A library to manage editorial objects used in the Open Journals' review process"
   s.metadata = {
     "bug_tracker_uri"   => "https://github.com/xuanxu/theoj/issues",
-    "changelog_uri"     => "https://github.com/xuanxu/theoj/blob/master/CHANGELOG.md",
+    "changelog_uri"     => "https://github.com/xuanxu/theoj/blob/main/CHANGELOG.md",
     "documentation_uri" => "https://www.rubydoc.info/gems/theoj",
     "homepage_uri"      => s.homepage,
     "source_code_uri"   => s.homepage
