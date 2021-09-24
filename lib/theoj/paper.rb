@@ -37,16 +37,32 @@ module Theoj
       paper_path
     end
 
-    def self.from_repo(repository_url, branch = "")
-      Paper.new(repository_url, branch, nil)
+    def title
+      @paper_metadata["title"]
+    end
+
+    def tags
+      @paper_metadata["tags"]
+    end
+
+    def date
+      @paper_metadata["date"]
+    end
+
+    def bibliography_path
+      @paper_metadata["bibliography"]
+    end
+
+    def local_path
+      @local_path ||= "tmp/#{SecureRandom.hex}"
     end
 
     def cleanup
       FileUtils.rm_rf(local_path) if Dir.exist?(local_path)
     end
 
-    def local_path
-      @local_path ||= "tmp/#{SecureRandom.hex}"
+    def self.from_repo(repository_url, branch = "")
+      Paper.new(repository_url, branch, nil)
     end
 
     private

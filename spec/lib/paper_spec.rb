@@ -114,4 +114,26 @@ describe Theoj::Paper do
       expect(paper_path).to be_nil
     end
   end
+
+  describe "metadata" do
+    before do
+      @paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata.md"))
+    end
+
+    it "should have title" do
+      expect(@paper.title).to eq("Nimbus: Random Forest algorithms in a genomic selection context")
+    end
+
+    it "should have tags" do
+      expect(@paper.tags).to eq(["random forest", "genomics", "machine learning", "ruby", "open science"])
+    end
+
+    it "should have date" do
+      expect(@paper.date).to eq("12 July 2021")
+    end
+
+    it "should have bibliography_path" do
+      expect(@paper.bibliography_path).to eq("paper-bib-path.bib")
+    end
+  end
 end
