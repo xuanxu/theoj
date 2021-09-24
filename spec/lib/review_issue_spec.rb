@@ -6,7 +6,9 @@ describe Theoj::ReviewIssue do
     @review_issue  = Theoj::ReviewIssue.new("openjournals/reviews", 42)
     @issue = double(body: "Review Issue 42 \n "+
                          "<!--target-repository-->https://github.com/myorg/researchsoftware<!--end-target-repository-->" +
-                         "<!--branch-->paperdocs<!--end-branch-->")
+                         "<!--branch-->paperdocs<!--end-branch-->" +
+                         "<!--editor-->@the-editor <!--end-editor-->" +
+                         "<!--reviewers--> @reviewer1, reviewer2<!--end-reviewers-->")
     allow(@review_issue).to receive(:issue).and_return(@issue)
   end
 
@@ -35,6 +37,14 @@ describe Theoj::ReviewIssue do
 
     it "should read paper_branch" do
       expect(@review_issue.paper_branch).to eq("paperdocs")
+    end
+
+    it "should read reviewers" do
+      expect(@review_issue.reviewers).to eq(["@reviewer1", "reviewer2"])
+    end
+
+    it "should read editor" do
+      expect(@review_issue.editor).to eq("@the-editor")
     end
   end
 

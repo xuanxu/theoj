@@ -27,6 +27,14 @@ module Theoj
       @target_repository ||= read_value_from_body("target-repository")
     end
 
+    def reviewers
+      @reviewers ||= read_value_from_body("reviewers").split(",").map{|r| r.strip} - ["Pending", "TBD"]
+    end
+
+    def editor
+      @editor ||= read_value_from_body("editor")
+    end
+
     def paper_branch
       @paper_branch ||= read_value_from_body("branch")
     end
