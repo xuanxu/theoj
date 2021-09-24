@@ -8,4 +8,8 @@ module CommonActions
 
     allow(Octokit::Client).to receive(:new).and_return(Octokit::Client.new())
   end
+
+  def fixture(file_name)
+    File.dirname(__FILE__) + '/fixtures/' + file_name
+  end
 end
