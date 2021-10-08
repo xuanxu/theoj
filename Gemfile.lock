@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    theoj (0.0.2)
+    theoj (0.0.3)
       octokit (~> 4.21)
 
 GEM
