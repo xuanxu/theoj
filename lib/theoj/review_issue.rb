@@ -16,7 +16,7 @@ module Theoj
     end
 
     def issue_body
-      issue(repository, issue_id).body
+      @issue_body ||= issue(repository, issue_id).body
     end
 
     def paper
