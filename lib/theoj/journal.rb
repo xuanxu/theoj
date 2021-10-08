@@ -1,3 +1,5 @@
+require_relative "journals_data"
+
 module Theoj
   class Journal
     attr_accessor :data
@@ -35,13 +37,7 @@ module Theoj
     end
 
     def default_data
-      {
-        doi_prefix: "10.21105",
-        url: "http://joss.theoj.org",
-        name: "Journal of Open Source Software",
-        alias: "joss",
-        launch_date: "2016-05-05",
-      }
+      Theoj::JOURNALS_DATA[:joss]
     end
 
     def parsed_launch_date
