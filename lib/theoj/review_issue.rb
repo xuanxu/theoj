@@ -35,6 +35,14 @@ module Theoj
       @editor ||= read_value_from_body("editor")
     end
 
+    def archive
+      @archive ||= read_value_from_body("archive")
+    end
+
+    def version
+      @version ||= read_value_from_body("version")
+    end
+
     def paper_branch
       @paper_branch ||= read_value_from_body("branch")
     end

@@ -8,7 +8,11 @@ describe Theoj::ReviewIssue do
                          "<!--target-repository-->https://github.com/myorg/researchsoftware<!--end-target-repository-->" +
                          "<!--branch-->paperdocs<!--end-branch-->" +
                          "<!--editor-->@the-editor <!--end-editor-->" +
-                         "<!--reviewers--> @reviewer1, reviewer2<!--end-reviewers-->")
+                         "<!--reviewers--> @reviewer1, reviewer2<!--end-reviewers-->" +
+                         "<!--version-->1.33.42<!--end-version-->" +
+                         "<!--archive-->link-to-zenodo<!--end-archive-->" +
+                         "<!--whatever-->nevermind<!--end-whatever-->" +
+                         "<!--no-value-->Pending<!--end-no-value-->")
     allow(@review_issue).to receive(:issue).and_return(@issue)
   end
 
@@ -45,6 +49,14 @@ describe Theoj::ReviewIssue do
 
     it "should read editor" do
       expect(@review_issue.editor).to eq("@the-editor")
+    end
+
+    it "should read version" do
+      expect(@review_issue.version).to eq("1.33.42")
+    end
+
+    it "should read archive" do
+      expect(@review_issue.archive).to eq("link-to-zenodo")
     end
   end
 
