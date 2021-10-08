@@ -47,6 +47,10 @@ module Theoj
       @paper_branch ||= read_value_from_body("branch")
     end
 
+    def value_for(value_name)
+      read_value_from_body(value_name)
+    end
+
     private
 
       def read_from_body(start_mark, end_mark)

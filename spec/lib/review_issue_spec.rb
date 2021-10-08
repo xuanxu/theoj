@@ -58,6 +58,10 @@ describe Theoj::ReviewIssue do
     it "should read archive" do
       expect(@review_issue.archive).to eq("link-to-zenodo")
     end
+
+    it "should read requested value" do
+      expect(@review_issue.value_for("whatever")).to eq("nevermind")
+    end
   end
 
   describe "paper" do
