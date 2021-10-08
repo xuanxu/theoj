@@ -62,6 +62,10 @@ describe Theoj::ReviewIssue do
     it "should read requested value" do
       expect(@review_issue.value_for("whatever")).to eq("nevermind")
     end
+
+    it "should return empty string if value is pending" do
+      expect(@review_issue.value_for("no-value")).to be_empty
+    end
   end
 
   describe "paper" do

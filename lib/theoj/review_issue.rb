@@ -58,6 +58,8 @@ module Theoj
         issue_body.match(/#{start_mark}(.*)#{end_mark}/im) do |m|
           text = m[1]
         end
+
+        text = "" if ["Pending", "TBD"].include?(text.strip)
         text.strip
       end
 
