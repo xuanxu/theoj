@@ -30,6 +30,10 @@ module Theoj
       "#{@alias}.#{id}"
     end
 
+    def paper_doi_for_id(paper_id)
+      "#@doi_prefix/#{paper_id}"
+    end
+
     private
 
     def set_data(custom_data)

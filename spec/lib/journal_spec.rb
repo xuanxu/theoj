@@ -52,9 +52,16 @@ describe Theoj::Journal do
   end
 
   describe "#paper_id_from_issue" do
-    it "should use journal alias the issue's id" do
+    it "should use journal alias and the issue's id" do
       journal = Theoj::Journal.new(alias: "great_journal")
       expect(journal.paper_id_from_issue(33)).to eq("great_journal.00033")
+    end
+  end
+
+  describe "#paper_doi_for_id" do
+    it "should use journal's DOI prefix and the paper's id" do
+      journal = Theoj::Journal.new(doi_prefix: "10.12345")
+      expect(journal.paper_doi_for_id("sciencejournal.00042")).to eq("10.12345/sciencejournal.00042")
     end
   end
 end
