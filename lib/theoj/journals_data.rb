@@ -6,7 +6,7 @@ module Theoj
       name: "Journal of Open Source Software",
       alias: "joss",
       launch_date: "2016-05-05",
-      paper_repository: "openjournals/joss-papers",
+      papers_repository: "openjournals/joss-papers",
       reviews_repository: "openjournals/joss-reviews"
     },
     jose: {
@@ -15,7 +15,7 @@ module Theoj
       name: "Journal of Open Source Education",
       alias: "jose",
       launch_date: "2018-03-07",
-      paper_repository: "openjournals/jose-papers",
+      papers_repository: "openjournals/jose-papers",
       reviews_repository: "openjournals/jose-reviews"
     }
   }

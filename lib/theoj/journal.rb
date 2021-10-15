@@ -25,6 +25,11 @@ module Theoj
       data[:current_issue] || (1 + ((Time.new.year * 12 + Time.new.month) - (launch_year * 12 + launch_month)))
     end
 
+    def paper_id_from_issue(review_issue_id)
+      id = "%05d" % review_issue_id
+      "#{@alias}.#{id}"
+    end
+
     private
 
     def set_data(custom_data)

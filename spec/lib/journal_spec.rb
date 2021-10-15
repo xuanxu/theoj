@@ -50,4 +50,11 @@ describe Theoj::Journal do
       expect(journal.current_issue).to eq(3042)
     end
   end
+
+  describe "#paper_id_from_issue" do
+    it "should use journal alias the issue's id" do
+      journal = Theoj::Journal.new(alias: "great_journal")
+      expect(journal.paper_id_from_issue(33)).to eq("great_journal.00033")
+    end
+  end
 end
