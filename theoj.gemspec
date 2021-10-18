@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ['--main', 'README.md', '--charset=UTF-8']
 
   s.add_dependency "octokit", "~> 4.21"
+  s.add_dependency "openjournals-nameable"
 
   s.add_development_dependency "rake", "~> 13.0.6"
   s.add_development_dependency "rspec", "~> 3.10"
