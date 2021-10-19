@@ -4,6 +4,11 @@
 
 - Added method to Journal to create paper_id from issue_id
 - Added method to Journal to get a DOI based on a paper id
+- Added languages to Paper
+- Added authors info to Paper
+- Author object
+- Added ORCID validation
+- Added Submission object, grouping a paper, a review issue and a journal
 
 ## 0.0.3 (2021-10-08)
 
