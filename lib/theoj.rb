@@ -1,6 +1,7 @@
 require_relative "theoj/version"
 require_relative "theoj/git"
 require_relative "theoj/github"
+require_relative "theoj/orcid"
 require_relative "theoj/journal"
 require_relative "theoj/review_issue"
 require_relative "theoj/paper"
