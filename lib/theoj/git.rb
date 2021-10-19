@@ -1,5 +1,5 @@
-require 'open3'
-require 'fileutils'
+require "open3"
+require "fileutils"
 
 module Theoj
   module Git

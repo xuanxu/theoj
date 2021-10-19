@@ -10,7 +10,7 @@ authors:
  - name: Juanjo Bazán
    orcid: 0000-0001-7699-3983
    affiliation: 1
- - name: Alien
+ - name: Ellen Ripley
    orcid: 0000-0002-9106-4063
    affiliation: 2
 affiliations:

@@ -2,7 +2,7 @@ describe Theoj::Journal do
 
   describe "initialization" do
     it "should use default data" do
-      default_journal  = Theoj::Journal.new
+      default_journal = Theoj::Journal.new
 
       expect(default_journal.doi_prefix).to eq("10.21105")
       expect(default_journal.url).to eq("https://joss.theoj.org")
@@ -12,7 +12,7 @@ describe Theoj::Journal do
     end
 
     it "should use custom data" do
-      default_journal  = Theoj::Journal.new(doi_prefix: "10.33333", name: "Test Journal", launch_date: "2021-09-23")
+      default_journal = Theoj::Journal.new(doi_prefix: "10.33333", name: "Test Journal", launch_date: "2021-09-23")
 
       expect(default_journal.doi_prefix).to eq("10.33333")
       expect(default_journal.url).to eq("https://joss.theoj.org")

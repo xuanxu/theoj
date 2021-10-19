@@ -1,5 +1,7 @@
-require 'find'
-require 'yaml'
+require "find"
+require "yaml"
+require "rugged"
+require "linguist"
 
 module Theoj
   class Paper
@@ -19,7 +21,46 @@ module Theoj
     end
 
     def authors
-      []
+      @authors ||= parse_authors
+    end
+
+    def citation_author
+      surname = authors.first.last_name
+      initials = authors.first.initials
+
+      if authors.size > 1
+        return "#{surname} et al."
+      else
+        return "#{surname}, #{initials}"
+      end
+    end
+
+    def title
+      @paper_metadata["title"]
+    end
+
+    def tags
+      @paper_metadata["tags"]
+    end
+
+    def date
+      @paper_metadata["date"]
+    end
+
+    def languages
+      @languages ||= detect_languages
+    end
+
+    def bibliography_path
+      @paper_metadata["bibliography"]
+    end
+
+    def local_path
+      @local_path ||= "tmp/#{SecureRandom.hex}"
+    end
+
+    def cleanup
+      FileUtils.rm_rf(local_path) if Dir.exist?(local_path)
     end
 
     def self.find_paper_path(search_path)
@@ -35,30 +76,6 @@ module Theoj
       end
 
       paper_path
-    end
-
-    def title
-      @paper_metadata["title"]
-    end
-
-    def tags
-      @paper_metadata["tags"]
-    end
-
-    def date
-      @paper_metadata["date"]
-    end
-
-    def bibliography_path
-      @paper_metadata["bibliography"]
-    end
-
-    def local_path
-      @local_path ||= "tmp/#{SecureRandom.hex}"
-    end
-
-    def cleanup
-      FileUtils.rm_rf(local_path) if Dir.exist?(local_path)
     end
 
     def self.from_repo(repository_url, branch = "")
@@ -93,6 +110,44 @@ module Theoj
         else
           YAML.load_file(paper_path)
         end
+      end
+
+      def parse_authors
+        parsed_authors = []
+        authors_metadata = @paper_metadata['authors']
+        affiliations_metadata = parse_affiliations(@paper_metadata['affiliations'])
+
+        # Loop through the authors block and build up the affiliation
+        authors_metadata.each do |author|
+          affiliation_index = author['affiliation']
+          failure "Author (#{author['name']}) is missing affiliation" if affiliation_index.nil?
+          begin
+            parsed_author = Author.new(author['name'], author['orcid'], affiliation_index, affiliations_metadata)
+          rescue Exception => e
+            failure(e.message)
+          end
+          parsed_authors << parsed_author
+        end
+
+        parsed_authors
+      end
+
+      def parse_affiliations(affliations_yaml)
+        affliations_metadata = {}
+
+        affliations_yaml.each do |affiliation|
+          affliations_metadata[affiliation['index']] = affiliation['name']
+        end
+
+        affliations_metadata
+      end
+
+      def detect_languages
+        repo = Rugged::Repository.discover(paper_path)
+        project = Linguist::Repository.new(repo, repo.head.target_id)
+
+        # Take top five languages from Linguist
+        project.languages.keys.take(5)
       end
 
       def failure(msg)

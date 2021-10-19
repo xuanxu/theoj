@@ -136,4 +136,23 @@ describe Theoj::Paper do
       expect(@paper.bibliography_path).to eq("paper-bib-path.bib")
     end
   end
+
+  describe "paper's authors" do
+    before do
+      @paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata.md"))
+    end
+
+    it "should be extracted from the metadata" do
+      authors = @paper.authors
+      expect(authors.size).to eq(2)
+      expect(authors.first.name).to eq("Juanjo Bazán")
+      expect(authors.first.affiliation).to eq("OpenJournals")
+      expect(authors.last.name).to eq("Ellen Ripley")
+      expect(authors.last.affiliation).to eq("Nostromo")
+    end
+
+    it "should include a citation author" do
+      expect(@paper.citation_author).to eq("Bazán et al.")
+    end
+  end
 end
