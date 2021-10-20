@@ -9,6 +9,7 @@ describe Theoj::Journal do
       expect(default_journal.name).to eq("Journal of Open Source Software")
       expect(default_journal.alias).to eq("joss")
       expect(default_journal.launch_date).to eq("2016-05-05")
+      expect(default_journal.data[:deposit_url]).to eq("https://joss.theoj.org/papers/api_deposit")
     end
 
     it "should use custom data" do

@@ -7,7 +7,8 @@ module Theoj
       alias: "joss",
       launch_date: "2016-05-05",
       papers_repository: "openjournals/joss-papers",
-      reviews_repository: "openjournals/joss-reviews"
+      reviews_repository: "openjournals/joss-reviews",
+      deposit_url: "https://joss.theoj.org/papers/api_deposit"
     },
     jose: {
       doi_prefix: "10.21105",
@@ -16,7 +17,8 @@ module Theoj
       alias: "jose",
       launch_date: "2018-03-07",
       papers_repository: "openjournals/jose-papers",
-      reviews_repository: "openjournals/jose-reviews"
+      reviews_repository: "openjournals/jose-reviews",
+      deposit_url: "https://joss.theoj.org/papers/api_deposit"
     }
   }
 end
