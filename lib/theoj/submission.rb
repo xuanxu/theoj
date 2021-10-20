@@ -1,3 +1,6 @@
+require "json"
+require "base64"
+
 module Theoj
   class Submission
     attr_accessor :journal
@@ -12,23 +15,37 @@ module Theoj
 
     # Create the payload to use to post for depositing with Open Journals
     def deposit_payload
-      payload = {
-        'paper' => {}
+      {
+        id: review_issue.issue_id,
+        metadata: Base64.encode64(metadata_payload),
+        doi: paper_doi,
+        archive_doi: review_issue.archive,
+        citation_string: citation_string,
+        title: paper.title
+      }
+    end
+
+    # Create a metadata json payload
+    def metadata_payload
+      metadata = {
+        paper: {
+          title: paper.title,
+          tags: paper.tags,
+          languages: paper.languages,
+          authors: paper.authors.collect { |a| a.to_h },
+          doi: paper_doi,
+          archive_doi: review_issue.archive,
+          repository_address: review_issue.target_repository,
+          editor: review_issue.editor,
+          reviewers: review_issue.reviewers.collect(&:strip),
+          volume: journal.current_volume,
+          issue: journal.current_issue,
+          year: journal.current_year,
+          page: review_issue.issue_id,
+        }
       }
 
-      %w(title tags languages).each { |var| payload['paper'][var] = paper.send(var) }
-      payload['paper']['authors'] = paper.authors.collect { |a| a.to_h }
-      payload['paper']['doi'] = paper_doi
-      payload['paper']['archive_doi'] = review_issue.archive
-      payload['paper']['repository_address'] = review_issue.target_repository
-      payload['paper']['editor'] = review_issue.editor
-      payload['paper']['reviewers'] = review_issue.reviewers.collect(&:strip)
-      payload['paper']['volume'] = journal.current_volume
-      payload['paper']['issue'] = journal.current_issue
-      payload['paper']['year'] = journal.current_year
-      payload['paper']['page'] = review_issue.issue_id
-
-      payload
+      metadata.to_json
     end
 
     def citation_string
