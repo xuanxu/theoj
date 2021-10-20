@@ -23,5 +23,5 @@ jobs:
         bundler-cache: true
     - name: Run specs
       run: |
-        bundle exec ruby -v
+        ruby -v
         bundle exec rake
