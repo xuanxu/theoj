@@ -1,5 +1,6 @@
 require "json"
 require "base64"
+require "faraday"
 
 module Theoj
   class Submission
@@ -46,6 +47,11 @@ module Theoj
       }
 
       metadata.to_json
+    end
+
+    def deposit!(secret)
+      parameters = deposit_payload.merge(secret: secret)
+      Faraday.post(journal.data[:deposit_url], parameters.to_json, {"Content-Type" => "application/json"})
     end
 
     def citation_string

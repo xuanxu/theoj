@@ -6,6 +6,17 @@ describe Theoj::Submission do
     @paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata.md"))
 
     @submission  = Theoj::Submission.new(@journal, @review_issue, @paper)
+
+    issue = double(body: "Review Issue 42 \n "+
+                         "<!--target-repository-->https://github.com/myorg/researchsoftware<!--end-target-repository-->" +
+                         "<!--branch-->paperdocs<!--end-branch-->" +
+                         "<!--editor-->@the-editor <!--end-editor-->" +
+                         "<!--reviewers--> @reviewer1, reviewer2<!--end-reviewers-->" +
+                         "<!--version-->1.33.42<!--end-version-->" +
+                         "<!--archive-->link-to-zenodo<!--end-archive-->" +
+                         "<!--whatever-->nevermind<!--end-whatever-->" +
+                         "<!--no-value-->Pending<!--end-no-value-->")
+    allow(@review_issue).to receive(:issue).and_return(issue)
   end
 
   describe "initialization" do
@@ -49,18 +60,8 @@ describe Theoj::Submission do
   end
 
   describe "payloads" do
-
     before do
-      issue = double(body: "Review Issue 42 \n "+
-                           "<!--target-repository-->https://github.com/myorg/researchsoftware<!--end-target-repository-->" +
-                           "<!--branch-->paperdocs<!--end-branch-->" +
-                           "<!--editor-->@the-editor <!--end-editor-->" +
-                           "<!--reviewers--> @reviewer1, reviewer2<!--end-reviewers-->" +
-                           "<!--version-->1.33.42<!--end-version-->" +
-                           "<!--archive-->link-to-zenodo<!--end-archive-->" +
-                           "<!--whatever-->nevermind<!--end-whatever-->" +
-                           "<!--no-value-->Pending<!--end-no-value-->")
-      allow(@review_issue).to receive(:issue).and_return(issue)
+
     end
 
     it "should create a metadata json payload" do
@@ -100,4 +101,31 @@ describe Theoj::Submission do
       expect(payload[:title]).to eq(@paper.title)
     end
   end
+
+  describe "#deposit!" do
+    it "should call the journal's deposit url" do
+      expected_url = @journal.data[:deposit_url]
+      expect(expected_url.to_s).to_not be_empty
+      expect(Faraday).to receive(:post).with(expected_url, anything, anything)
+
+      @submission.deposit!("secret")
+    end
+
+    it "should include the received secret in the payload" do
+      deposit_payload = @submission.deposit_payload
+      deposit_payload[:secret] = "journal-secret-token"
+      expected_payload = deposit_payload.to_json
+      expect(Faraday).to receive(:post).with(anything, expected_payload, anything)
+
+      @submission.deposit!("journal-secret-token")
+    end
+
+    it "should return the API call response" do
+      expect(Faraday).to receive(:post).and_return(double(body: "OK", status: 201))
+      response = @submission.deposit!("secret")
+
+      expect(response.status).to eq(201)
+    end
+  end
+
 end
