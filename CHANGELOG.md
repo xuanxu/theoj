@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 1.0.0 (2021-10-20)
 
 - Added method to Journal to create paper_id from issue_id
 - Added method to Journal to get a DOI based on a paper id
@@ -9,6 +9,7 @@
 - Author object
 - Added ORCID validation
 - Added Submission object, grouping a paper, a review issue and a journal
+- Added paper depositing
 
 ## 0.0.3 (2021-10-08)
 

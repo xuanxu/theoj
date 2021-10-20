@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    theoj (0.0.3)
+    theoj (1.0.0)
+      faraday
       github-linguist
       octokit (~> 4.21)
       openjournals-nameable
