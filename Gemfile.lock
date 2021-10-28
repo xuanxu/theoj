@@ -45,7 +45,7 @@ GEM
     octokit (4.21.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
-    openjournals-nameable (1.1.6)
+    openjournals-nameable (1.1.7)
     public_suffix (4.0.6)
     rake (13.0.6)
     rspec (3.10.0)
