@@ -10,4 +10,5 @@ require_relative "theoj/paper"
 require_relative "theoj/author"
 
 module Theoj
+  class Error < StandardError; end
 end
