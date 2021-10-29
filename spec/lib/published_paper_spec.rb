@@ -4,7 +4,7 @@ describe Theoj::PublishedPaper do
     it "should error if invalid DOI" do
       expect(Faraday).to receive(:get).with("https://doi.org/wrong-doi").and_return(double(status: 404))
 
-      expect{ Theoj::PublishedPaper.new("wrong-doi")}.to raise_error("Error: the DOI is invalid, url does not resolve https://doi.org/wrong-doi")
+      expect{ Theoj::PublishedPaper.new("wrong-doi")}.to raise_error("The DOI is invalid, url does not resolve https://doi.org/wrong-doi")
     end
 
     it "should error if paper's metadata can't be found" do
@@ -13,7 +13,7 @@ describe Theoj::PublishedPaper do
       expect(Faraday).to receive(:get).with("paper-url.json").and_return(double(status: 404))
 
 
-      expect{ Theoj::PublishedPaper.new("paper-doi")}.to raise_error("Error: Could not find the paper data at paper-url.json")
+      expect{ Theoj::PublishedPaper.new("paper-doi")}.to raise_error("Could not find the paper data at paper-url.json")
     end
 
     it "should initialize metadata" do

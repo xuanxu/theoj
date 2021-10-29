@@ -62,7 +62,7 @@ module Theoj
       if validator.valid?
         return author_orcid.strip
       else
-        raise "Problem with ORCID (#{author_orcid}) for #{self.name}. #{validator.error}"
+        raise Theoj::Error, "Problem with ORCID (#{author_orcid}) for #{self.name}. #{validator.error}"
       end
     end
 
@@ -82,7 +82,7 @@ module Theoj
       # Raise if we can't parse the string, might be because of this bug :-(
       # https://bugs.ruby-lang.org/issues/12451
       affiliations.each do |a|
-        raise "Problem with affiliations for #{self.name}, perhaps the " +
+        raise Theoj::Error, "Problem with affiliations for #{self.name}, perhaps the " +
               "affiliations index need quoting?" unless affiliations_hash.has_key?(a)
 
         author_affiliations << affiliations_hash[a].strip

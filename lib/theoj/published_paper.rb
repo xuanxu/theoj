@@ -14,14 +14,14 @@ module Theoj
       if doi_response.status == 302
         paper_url = doi_response.headers[:location]
       else
-        raise "Error: the DOI is invalid, url does not resolve #{doi_url}"
+        raise Theoj::Error, "The DOI is invalid, url does not resolve #{doi_url}"
       end
 
       paper_data = Faraday.get(paper_url + ".json")
       if paper_data.status == 200
         @metadata = JSON.parse(paper_data.body, symbolize_names: true)
       else
-        raise "Error: Could not find the paper data at #{paper_url + ".json"}"
+        raise Theoj::Error, "Could not find the paper data at #{paper_url + ".json"}"
       end
     end
 

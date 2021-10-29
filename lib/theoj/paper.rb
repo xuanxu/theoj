@@ -152,7 +152,7 @@ module Theoj
 
       def failure(msg)
         cleanup
-        raise(msg)
+        raise Theoj::Error, msg
       end
   end
 end
