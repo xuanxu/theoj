@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0 (2021-10-29)
+
+- Added Theoj::PublishedPaper object with metadata from Journal's API
+- Added custom Error class
+
 ## 1.0.0 (2021-10-20)
 
 - Added method to Journal to create paper_id from issue_id
