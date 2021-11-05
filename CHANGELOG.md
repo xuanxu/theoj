@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 (2021-11-05)
+
+- Added support for test-journal
+
 ## 1.1.0 (2021-10-29)
 
 - Added Theoj::PublishedPaper object with metadata from Journal's API
