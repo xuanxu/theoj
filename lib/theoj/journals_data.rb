@@ -19,6 +19,16 @@ module Theoj
       papers_repository: "openjournals/jose-papers",
       reviews_repository: "openjournals/jose-reviews",
       deposit_url: "https://joss.theoj.org/papers/api_deposit"
+    },
+    test_journal: {
+      doi_prefix: "10.21105",
+      url: "https://test.joss.theoj.org/",
+      name: "Test Journal",
+      alias: "test_journal",
+      launch_date: "2016-05-05",
+      papers_repository: "openjournals/joss-papers-testing",
+      reviews_repository: "openjournals/joss-reviews-testing",
+      deposit_url: "https://test.joss.theoj.org/papers/api_deposit"
     }
   }
 end
