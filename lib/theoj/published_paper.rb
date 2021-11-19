@@ -35,7 +35,7 @@ module Theoj
     end
 
     def yaml_metadata
-      metadata.to_yaml
+      metadata.transform_keys(&:to_s).to_yaml
     end
 
     def json_metadata

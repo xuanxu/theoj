@@ -72,7 +72,7 @@ describe Theoj::PublishedPaper do
     end
 
     it "should be available in yaml format" do
-      expect(@published_paper.yaml_metadata).to eq(@metadata.to_yaml)
+      expect(@published_paper.yaml_metadata).to eq(@metadata.transform_keys(&:to_s).to_yaml)
     end
   end
 end
