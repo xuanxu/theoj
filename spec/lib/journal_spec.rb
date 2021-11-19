@@ -65,4 +65,16 @@ describe Theoj::Journal do
       expect(journal.paper_doi_for_id("sciencejournal.00042")).to eq("10.12345/sciencejournal.00042")
     end
   end
+
+  describe "#reviews_repository_url" do
+    it "should return complete url for the reviews repo" do
+      journal = Theoj::Journal.new
+      expect(journal.reviews_repository_url).to eq("https://github.com/openjournals/joss-reviews")
+    end
+
+    it "should return complete url for an issue from the reviews repo" do
+      journal = Theoj::Journal.new(reviews_repository: "test-org/paper-reviews")
+      expect(journal.reviews_repository_url(33)).to eq("https://github.com/test-org/paper-reviews/issues/33")
+    end
+  end
 end

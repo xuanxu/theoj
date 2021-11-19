@@ -34,6 +34,14 @@ module Theoj
       "#@doi_prefix/#{paper_id}"
     end
 
+    def reviews_repository_url(issue_id=nil)
+      reviews_url = "https://github.com/#{data[:reviews_repository]}"
+      if issue_id
+        reviews_url += "/issues/" + issue_id.to_s
+      end
+      reviews_url
+    end
+
     private
 
     def set_data(custom_data)
