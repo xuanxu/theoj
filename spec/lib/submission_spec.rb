@@ -102,7 +102,7 @@ describe Theoj::Submission do
   describe "#article_metadata" do
     before do
       editor_lookup = double(status: 200, body: { name: "J.B.", url: "http://editor.edit", orcid: "007" }.to_json)
-      paper_lookup = double(status: 200, body: { submitted_at: "24 Nov" }.to_json)
+      paper_lookup = double(status: 200, body: { submitted_at: "24 Nov", published_at: "25 Nov" }.to_json)
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/editors/lookup/the-editor").and_return(editor_lookup)
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(paper_lookup)
 
@@ -137,7 +137,24 @@ describe Theoj::Submission do
 
     it "should include submitted_at/published_at data" do
       expect(@article_metadata[:submitted_at]).to eq("24 Nov")
-      expect(@article_metadata[:published_at]).to eq(nil)
+      expect(@article_metadata[:published_at]).to eq("25 Nov")
+    end
+
+    it "should include nil information from lookups if not available" do
+      editor_lookup = double(status: 404)
+      paper_lookup = double(status: 500)
+
+      expect(Faraday).to receive(:get).with("https://joss.theoj.org/editors/lookup/the-editor").and_return(editor_lookup)
+      expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(paper_lookup)
+
+      article_metadata = @submission.article_metadata
+
+      expect(article_metadata[:editor]).to eq({ github_user: "@the-editor",
+                                                 name: nil,
+                                                 url: nil,
+                                                 orcid: nil })
+      expect(article_metadata[:submitted_at]).to eq(nil)
+      expect(article_metadata[:published_at]).to eq(nil)
     end
   end
 
