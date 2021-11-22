@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added reviews_repository_url to Journal
+- Added article_metadata to Submission
+- Added editor and paper dates lookup information in Submission
+
 ## 1.1.1 (2021-11-05)
 
 - Added support for test-journal
