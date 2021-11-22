@@ -60,9 +60,6 @@ describe Theoj::Submission do
   end
 
   describe "payloads" do
-    before do
-
-    end
 
     it "should create a metadata json payload" do
       json_payload = @submission.metadata_payload
@@ -99,6 +96,48 @@ describe Theoj::Submission do
       expect(payload[:archive_doi]).to eq("link-to-zenodo")
       expect(payload[:citation_string]).to eq(@submission.citation_string)
       expect(payload[:title]).to eq(@paper.title)
+    end
+  end
+
+  describe "#article_metadata" do
+    before do
+      editor_lookup = double(status: 200, body: { name: "J.B.", url: "http://editor.edit", orcid: "007" }.to_json)
+      paper_lookup = double(status: 200, body: { submitted_at: "24 Nov" }.to_json)
+      expect(Faraday).to receive(:get).with("https://joss.theoj.org/editors/lookup/the-editor").and_return(editor_lookup)
+      expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(paper_lookup)
+
+      @article_metadata = @submission.article_metadata
+    end
+
+    it "should include article metadata" do
+      expect(@article_metadata.keys.size).to eq(17)
+
+      expect(@article_metadata[:title]).to eq(@paper.title)
+      expect(@article_metadata[:tags]).to eq(@paper.tags)
+      expect(@article_metadata[:languages]).to eq(@paper.languages)
+      expect(@article_metadata[:authors]).to eq(@paper.authors.collect { |a| a.to_h })
+      expect(@article_metadata[:doi]).to eq(@submission.paper_doi)
+      expect(@article_metadata[:software_repository_url]).to eq("https://github.com/myorg/researchsoftware")
+      expect(@article_metadata[:reviewers]).to eq(["@reviewer1", "reviewer2"])
+      expect(@article_metadata[:volume]).to eq(@journal.current_volume)
+      expect(@article_metadata[:issue]).to eq(@journal.current_issue)
+      expect(@article_metadata[:year]).to eq(@journal.current_year)
+      expect(@article_metadata[:page]).to eq(42)
+      expect(@article_metadata[:software_review_url]).to eq(@journal.reviews_repository_url(42))
+      expect(@article_metadata[:archive_doi]).to eq("link-to-zenodo")
+      expect(@article_metadata[:citation_string]).to eq(@submission.citation_string)
+    end
+
+    it "should include editor information" do
+      expect(@article_metadata[:editor]).to eq({ github_user: "@the-editor",
+                                                 name: "J.B.",
+                                                 url: "http://editor.edit",
+                                                 orcid: "007" })
+    end
+
+    it "should include submitted_at/published_at data" do
+      expect(@article_metadata[:submitted_at]).to eq("24 Nov")
+      expect(@article_metadata[:published_at]).to eq(nil)
     end
   end
 

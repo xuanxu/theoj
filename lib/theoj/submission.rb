@@ -4,6 +4,8 @@ require "faraday"
 
 module Theoj
   class Submission
+    include Theoj::GitHub
+
     attr_accessor :journal
     attr_accessor :review_issue
     attr_accessor :paper
@@ -47,6 +49,65 @@ module Theoj
       }
 
       metadata.to_json
+    end
+
+    # Create metadata used to generate PDF/JATS outputs
+    def article_metadata
+        metadata = {
+          title: paper.title,
+          tags: paper.tags,
+          languages: paper.languages,
+          authors: paper.authors.collect { |a| a.to_h },
+          doi: paper_doi,
+          software_repository_url: review_issue.target_repository,
+          reviewers: review_issue.reviewers.collect(&:strip),
+          volume: journal.current_volume,
+          issue: journal.current_issue,
+          year: journal.current_year,
+          page: review_issue.issue_id,
+          software_review_url: journal.reviews_repository_url(review_issue.issue_id),
+          archive_doi: review_issue.archive,
+          citation_string: citation_string
+        }
+
+        metadata.merge(editor_info, dates_info)
+    end
+
+    def editor_info
+      editor_info = { editor: {
+                        github_user: review_issue.editor,
+                        name: nil,
+                        url: nil,
+                        orcid: nil
+                        }
+                    }
+
+      if review_issue.editor
+        editor_lookup = Faraday.get(journal.url + "/editors/lookup/" + user_login(review_issue.editor))
+        if editor_lookup.status == 200
+          info = JSON.parse(editor_lookup.body, symbolize_names: true)
+          editor_info[:editor][:name] = info[:name]
+          editor_info[:editor][:url] = info[:url]
+          editor_info[:editor][:orcid] = info[:orcid]
+        end
+      end
+
+      editor_info
+    end
+
+    def dates_info
+      dates_info = {}
+
+      if review_issue.issue_id
+        editor_lookup = Faraday.get(journal.url + "/papers/lookup/" + review_issue.issue_id.to_s)
+        if editor_lookup.status == 200
+          info = JSON.parse(editor_lookup.body, symbolize_names: true)
+          dates_info[:submitted_at] = info[:submitted_at]
+          dates_info[:published_at] = info[:published_at]
+        end
+      end
+
+      dates_info
     end
 
     def deposit!(secret)
