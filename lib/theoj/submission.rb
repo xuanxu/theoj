@@ -96,7 +96,7 @@ module Theoj
     end
 
     def dates_info
-      dates_info = {}
+      dates_info = { submitted_at: nil, published_at: nil }
 
       if review_issue.issue_id
         editor_lookup = Faraday.get(journal.url + "/papers/lookup/" + review_issue.issue_id.to_s)
