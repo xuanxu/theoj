@@ -102,7 +102,7 @@ describe Theoj::Submission do
   describe "#article_metadata" do
     before do
       editor_lookup = double(status: 200, body: { name: "J.B.", url: "http://editor.edit", orcid: "007" }.to_json)
-      paper_lookup = double(status: 200, body: { submitted: "24 Nov", accepted: "25 Nov" }.to_json)
+      paper_lookup = double(status: 200, body: { submitted: "24 Nov 2022", accepted: "25 Nov 2022" }.to_json)
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/editors/lookup/the-editor").and_return(editor_lookup)
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(paper_lookup)
 
@@ -136,8 +136,8 @@ describe Theoj::Submission do
     end
 
     it "should include submitted_at/published_at data" do
-      expect(@article_metadata[:submitted_at]).to eq("24 Nov")
-      expect(@article_metadata[:published_at]).to eq("25 Nov")
+      expect(@article_metadata[:submitted_at]).to eq("2022/11/24")
+      expect(@article_metadata[:published_at]).to eq("2022/11/25")
     end
 
     it "should include nil information from lookups if not available" do
@@ -181,11 +181,19 @@ describe Theoj::Submission do
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(paper_lookup)
 
       dates_info = @submission.dates_info
-      expect(dates_info).to eq({ submitted_at: "30 April 2022", published_at: "1 November 2022" })
+      expect(dates_info).to eq({ submitted_at: "2022/04/30", published_at: "2022/11/01" })
     end
 
     it "should default to empty values" do
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(double(status: 500))
+
+      dates_info = @submission.dates_info
+      expect(dates_info).to eq({ submitted_at: nil, published_at: nil})
+    end
+
+    it "should return nil for invalid date values" do
+      paper_lookup = double(status: 200, body: { submitted: "Invalid date", accepted: "61 November 2222" }.to_json)
+      expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(paper_lookup)
 
       dates_info = @submission.dates_info
       expect(dates_info).to eq({ submitted_at: nil, published_at: nil})

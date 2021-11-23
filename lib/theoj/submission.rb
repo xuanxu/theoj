@@ -1,4 +1,5 @@
 require "json"
+require "date"
 require "base64"
 require "faraday"
 
@@ -102,8 +103,8 @@ module Theoj
         paper_lookup = Faraday.get(journal.url + "/papers/lookup/" + review_issue.issue_id.to_s)
         if paper_lookup.status == 200
           info = JSON.parse(paper_lookup.body, symbolize_names: true)
-          dates_info[:submitted_at] = info[:submitted]
-          dates_info[:published_at] = info[:accepted]
+          dates_info[:submitted_at] = format_date(info[:submitted]) if info[:submitted]
+          dates_info[:published_at] = format_date(info[:accepted]) if info[:accepted]
         end
       end
 
@@ -126,6 +127,13 @@ module Theoj
 
     def paper_doi
       journal.paper_doi_for_id(paper_id)
+    end
+
+    private
+    def format_date(date_string)
+      Date.parse(date_string.to_s).strftime("%Y/%m/%d")
+    rescue Date::Error
+      nil
     end
   end
 end
