@@ -8,7 +8,7 @@ describe Theoj::ReviewIssue do
                          "<!--target-repository-->https://github.com/myorg/researchsoftware<!--end-target-repository-->" +
                          "<!--branch-->paperdocs<!--end-branch-->" +
                          "<!--editor-->@the-editor <!--end-editor-->" +
-                         "<!--reviewers--> @reviewer1, reviewer2<!--end-reviewers-->" +
+                         "<!--reviewers-list--> @reviewer1, reviewer2<!--end-reviewers-list-->" +
                          "<!--version-->1.33.42<!--end-version-->" +
                          "<!--archive-->link-to-zenodo<!--end-archive-->" +
                          "<!--whatever-->nevermind<!--end-whatever-->" +

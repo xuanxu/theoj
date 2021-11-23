@@ -5,6 +5,7 @@
 - Added reviews_repository_url to Journal
 - Added article_metadata to Submission
 - Added editor and paper dates lookup information in Submission
+- Fixed error reading reviewers list from issue body
 
 ## 1.1.1 (2021-11-05)
 

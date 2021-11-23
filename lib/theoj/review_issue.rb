@@ -28,7 +28,7 @@ module Theoj
     end
 
     def reviewers
-      @reviewers ||= read_value_from_body("reviewers").split(",").map{|r| r.strip} - ["Pending", "TBD"]
+      @reviewers ||= read_value_from_body("reviewers-list").split(",").map{|r| r.strip} - ["Pending", "TBD"]
     end
 
     def editor
