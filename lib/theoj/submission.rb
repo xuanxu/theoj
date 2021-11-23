@@ -99,11 +99,11 @@ module Theoj
       dates_info = { submitted_at: nil, published_at: nil }
 
       if review_issue.issue_id
-        editor_lookup = Faraday.get(journal.url + "/papers/lookup/" + review_issue.issue_id.to_s)
-        if editor_lookup.status == 200
-          info = JSON.parse(editor_lookup.body, symbolize_names: true)
-          dates_info[:submitted_at] = info[:submitted_at]
-          dates_info[:published_at] = info[:published_at]
+        paper_lookup = Faraday.get(journal.url + "/papers/lookup/" + review_issue.issue_id.to_s)
+        if paper_lookup.status == 200
+          info = JSON.parse(paper_lookup.body, symbolize_names: true)
+          dates_info[:submitted_at] = info[:submitted]
+          dates_info[:published_at] = info[:accepted]
         end
       end
 
