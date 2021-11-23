@@ -110,11 +110,10 @@ describe Theoj::Submission do
     end
 
     it "should include article metadata" do
-      expect(@article_metadata.keys.size).to eq(18)
+      expect(@article_metadata.keys.size).to eq(17)
 
       expect(@article_metadata[:title]).to eq(@paper.title)
       expect(@article_metadata[:tags]).to eq(@paper.tags)
-      expect(@article_metadata[:languages]).to eq(@paper.languages)
       expect(@article_metadata[:authors]).to eq(@paper.authors.collect { |a| a.to_h })
       expect(@article_metadata[:doi]).to eq(@submission.paper_doi)
       expect(@article_metadata[:software_repository_url]).to eq("https://github.com/myorg/researchsoftware")

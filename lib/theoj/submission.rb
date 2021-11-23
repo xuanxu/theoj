@@ -56,7 +56,6 @@ module Theoj
         metadata = {
           title: paper.title,
           tags: paper.tags,
-          languages: paper.languages,
           authors: paper.authors.collect { |a| a.to_h },
           doi: paper_doi,
           software_repository_url: review_issue.target_repository,
