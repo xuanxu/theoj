@@ -110,7 +110,7 @@ describe Theoj::Submission do
     end
 
     it "should include article metadata" do
-      expect(@article_metadata.keys.size).to eq(17)
+      expect(@article_metadata.keys.size).to eq(18)
 
       expect(@article_metadata[:title]).to eq(@paper.title)
       expect(@article_metadata[:tags]).to eq(@paper.tags)
@@ -122,6 +122,7 @@ describe Theoj::Submission do
       expect(@article_metadata[:volume]).to eq(@journal.current_volume)
       expect(@article_metadata[:issue]).to eq(@journal.current_issue)
       expect(@article_metadata[:year]).to eq(@journal.current_year)
+      expect(@article_metadata[:journal_alias]).to eq(@journal.alias)
       expect(@article_metadata[:page]).to eq(42)
       expect(@article_metadata[:software_review_url]).to eq(@journal.reviews_repository_url(42))
       expect(@article_metadata[:archive_doi]).to eq("link-to-zenodo")

@@ -65,6 +65,7 @@ module Theoj
           issue: journal.current_issue,
           year: journal.current_year,
           page: review_issue.issue_id,
+          journal_alias: journal.alias,
           software_review_url: journal.reviews_repository_url(review_issue.issue_id),
           archive_doi: review_issue.archive,
           citation_string: citation_string
