@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.2.0 (2021-11-23)
 
 - Added reviews_repository_url to Journal
 - Added article_metadata to Submission
