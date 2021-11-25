@@ -131,7 +131,7 @@ module Theoj
 
     private
     def format_date(date_string)
-      Date.parse(date_string.to_s).strftime("%Y/%m/%d")
+      Date.parse(date_string.to_s).strftime("%Y-%m-%d")
     rescue Date::Error
       nil
     end

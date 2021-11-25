@@ -136,8 +136,8 @@ describe Theoj::Submission do
     end
 
     it "should include submitted_at/published_at data" do
-      expect(@article_metadata[:submitted_at]).to eq("2022/11/24")
-      expect(@article_metadata[:published_at]).to eq("2022/11/25")
+      expect(@article_metadata[:submitted_at]).to eq("2022-11-24")
+      expect(@article_metadata[:published_at]).to eq("2022-11-25")
     end
 
     it "should include nil information from lookups if not available" do
@@ -181,7 +181,7 @@ describe Theoj::Submission do
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/lookup/42").and_return(paper_lookup)
 
       dates_info = @submission.dates_info
-      expect(dates_info).to eq({ submitted_at: "2022/04/30", published_at: "2022/11/01" })
+      expect(dates_info).to eq({ submitted_at: "2022-04-30", published_at: "2022-11-01" })
     end
 
     it "should default to empty values" do
