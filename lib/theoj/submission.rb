@@ -60,7 +60,7 @@ module Theoj
           authors: paper.authors.collect { |a| a.to_h },
           doi: paper_doi,
           software_repository_url: review_issue.target_repository,
-          reviewers: review_issue.reviewers.collect(&:strip),
+          reviewers: review_issue.reviewers.collect{|r| user_login(r)},
           volume: journal.current_volume,
           issue: journal.current_issue,
           year: journal.current_year,
@@ -76,7 +76,7 @@ module Theoj
 
     def editor_info
       editor_info = { editor: {
-                        github_user: review_issue.editor,
+                        github_user: user_login(review_issue.editor),
                         name: nil,
                         url: nil,
                         orcid: nil

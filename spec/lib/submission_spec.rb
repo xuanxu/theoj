@@ -117,7 +117,7 @@ describe Theoj::Submission do
       expect(@article_metadata[:authors]).to eq(@paper.authors.collect { |a| a.to_h })
       expect(@article_metadata[:doi]).to eq(@submission.paper_doi)
       expect(@article_metadata[:software_repository_url]).to eq("https://github.com/myorg/researchsoftware")
-      expect(@article_metadata[:reviewers]).to eq(["@reviewer1", "reviewer2"])
+      expect(@article_metadata[:reviewers]).to eq(["reviewer1", "reviewer2"])
       expect(@article_metadata[:volume]).to eq(@journal.current_volume)
       expect(@article_metadata[:issue]).to eq(@journal.current_issue)
       expect(@article_metadata[:year]).to eq(@journal.current_year)
@@ -129,7 +129,7 @@ describe Theoj::Submission do
     end
 
     it "should include editor information" do
-      expect(@article_metadata[:editor]).to eq({ github_user: "@the-editor",
+      expect(@article_metadata[:editor]).to eq({ github_user: "the-editor",
                                                  name: "J.B.",
                                                  url: "http://editor.edit",
                                                  orcid: "007" })
@@ -149,7 +149,7 @@ describe Theoj::Submission do
 
       article_metadata = @submission.article_metadata
 
-      expect(article_metadata[:editor]).to eq({ github_user: "@the-editor",
+      expect(article_metadata[:editor]).to eq({ github_user: "the-editor",
                                                 name: nil,
                                                 url: nil,
                                                 orcid: nil })
@@ -164,14 +164,14 @@ describe Theoj::Submission do
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/editors/lookup/the-editor").and_return(editor_lookup)
 
       editor_info = @submission.editor_info
-      expect(editor_info[:editor]).to eq({ github_user: "@the-editor", name: "J.B.", url: "http://editor.edit", orcid: "007" })
+      expect(editor_info[:editor]).to eq({ github_user: "the-editor", name: "J.B.", url: "http://editor.edit", orcid: "007" })
     end
 
     it "should default to empty values" do
       expect(Faraday).to receive(:get).with("https://joss.theoj.org/editors/lookup/the-editor").and_return(double(status: 403))
 
       editor_info = @submission.editor_info
-      expect(editor_info[:editor]).to eq({ github_user: "@the-editor", name: nil, url: nil, orcid: nil })
+      expect(editor_info[:editor]).to eq({ github_user: "the-editor", name: nil, url: nil, orcid: nil })
     end
   end
 
