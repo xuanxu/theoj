@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    theoj (1.2.0)
+    theoj (1.2.1)
       faraday
       github-linguist
       octokit (~> 4.21)

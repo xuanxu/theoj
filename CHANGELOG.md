@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 (2021-11-30)
+
+- Changed metadata dates format to ISO
+- Changed editor and reviewers metadata values to github login
+- Removed languages from article metadata
+
 ## 1.2.0 (2021-11-23)
 
 - Added reviews_repository_url to Journal
