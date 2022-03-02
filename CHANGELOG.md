@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 (2022-03-02)
+
+- Change branches using git-switch instead of git-checkout to remove ambiguaties. Requires Git >= 2.23
+
 ## 1.2.1 (2021-11-30)
 
 - Changed metadata dates format to ISO
