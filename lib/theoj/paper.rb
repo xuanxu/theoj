@@ -132,14 +132,14 @@ module Theoj
         parsed_authors
       end
 
-      def parse_affiliations(affliations_yaml)
-        affliations_metadata = {}
+      def parse_affiliations(affiliations_yaml)
+        affiliations_metadata = {}
 
-        affliations_yaml.each do |affiliation|
-          affliations_metadata[affiliation['index']] = affiliation['name']
+        affiliations_yaml.each do |affiliation|
+          affiliations_metadata[affiliation['index']] = affiliation['name']
         end
 
-        affliations_metadata
+        affiliations_metadata
       end
 
       def detect_languages
