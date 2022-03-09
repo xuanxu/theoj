@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 (2022-03-09)
+
+- Fix error when loading metadata for papers with wrong path
+
 ## 1.3.0 (2022-03-02)
 
 - Change branches using git-switch instead of git-checkout to remove ambiguaties. Requires Git >= 2.23
