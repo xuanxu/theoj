@@ -14,6 +14,15 @@ describe Theoj::Paper do
       expect(paper.branch).to eq("paper")
     end
 
+    it "should set empty metadata if can't find paper" do
+      expect_any_instance_of(Theoj::Paper).to receive(:find_paper).and_return(nil)
+
+      paper = Theoj::Paper.new("https://github.com/myorg/researchsoftware", "wrong-branch")
+
+      expect(paper.paper_path).to be_nil
+      expect(paper.paper_metadata).to eq({})
+    end
+
     it "can be initialized from repo" do
       repository = "https://github.com/myorg/researchsoftware"
 

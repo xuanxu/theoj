@@ -105,7 +105,9 @@ module Theoj
       end
 
       def load_metadata
-        @paper_metadata ||= if paper_path.include?('.tex')
+        @paper_metadata ||= if paper_path.nil?
+          {}
+        elsif paper_path.include?('.tex')
           YAML.load_file(paper_path.gsub('.tex', '.yml'))
         else
           YAML.load_file(paper_path)
