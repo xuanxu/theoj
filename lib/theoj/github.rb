@@ -12,7 +12,7 @@ module Theoj
 
     # GitHub access token
     def github_access_token
-      @github_access_token ||= ENV["GH_ACCESS_TOKEN"]
+      @github_access_token ||= (ENV["GH_ACCESS_TOKEN"] || ENV["GITHUB_TOKEN"])
     end
 
     # GitHub API headers
