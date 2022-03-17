@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2 (2022-03-17)
+
+- Allow setting GitHub access using GITHUB_TOKEN env var
+
 ## 1.3.1 (2022-03-09)
 
 - Fix error when loading metadata for papers with wrong path
