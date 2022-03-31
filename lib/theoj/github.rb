@@ -46,13 +46,13 @@ module Theoj
 
     # Uses the GitHub API to determine if a user has a pending invitation
     def is_invited?(repo, username)
-      username = user_login(username)
+      username = user_login(username).downcase
       github_client.repository_invitations(repo).any? { |i| i.invitee.login.downcase == username }
     end
 
     # Returns the user login (removes the @ from the username)
     def user_login(username)
-      username.to_s.strip.sub(/^@/, "").downcase
+      username.to_s.strip.sub(/^@/, "")
     end
 
     # Returns true if the string is a valid GitHub isername (starts with @)

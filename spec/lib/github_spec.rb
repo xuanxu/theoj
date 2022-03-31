@@ -51,7 +51,7 @@ describe "Github methods" do
 
     it "should be false if user is not a collaborator" do
       expect_any_instance_of(Octokit::Client).to receive(:collaborator?).twice.with("openjournals/reviews", "xuanxu").and_return(false)
-      expect(subject.is_collaborator?(subject.repository, "@XuanXu")).to eq(false)
+      expect(subject.is_collaborator?(subject.repository, "@xuanxu")).to eq(false)
       expect(subject.is_collaborator?(subject.repository, "xuanxu")).to eq(false)
     end
   end
@@ -84,12 +84,12 @@ describe "Github methods" do
       expect(subject.user_login("@jossbot")).to eq("jossbot")
     end
 
-    it "should downcase the username" do
-      expect(subject.user_login("@JOSSBot")).to eq("jossbot")
+    it "should not change case of the username" do
+      expect(subject.user_login("@JOSSBot")).to eq("JOSSBot")
     end
 
     it "should strip the username" do
-      expect(subject.user_login(" Jossbot  ")).to eq("jossbot")
+      expect(subject.user_login(" Jossbot  ")).to eq("Jossbot")
     end
   end
 
