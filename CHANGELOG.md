@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.3 (2022-03-31)
+
+- Fix bug with upcased user logins
+
 ## 1.3.2 (2022-03-17)
 
 - Allow setting GitHub access using GITHUB_TOKEN env var
