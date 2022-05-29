@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.4 (2022-05-29)
+
+- Use Faraday v2 (updated Octokit and other dependencies)
+
 ## 1.3.3 (2022-03-31)
 
 - Fix bug with upcased user logins
