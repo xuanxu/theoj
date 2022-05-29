@@ -23,12 +23,12 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rdoc_options = ['--main', 'README.md', '--charset=UTF-8']
 
-  s.add_dependency "octokit", "~> 4.21"
-  s.add_dependency "faraday", "~> 1.10"
+  s.add_dependency "octokit", "~> 4.23"
+  s.add_dependency "faraday", "~> 2.3.0"
   s.add_dependency "openjournals-nameable", "~> 1.1"
-  s.add_dependency "github-linguist", "~> 7.19.0"
-  s.add_dependency "rugged", "~> 1.4.2"
+  s.add_dependency "github-linguist", "~> 7.20.0"
+  s.add_dependency "rugged", "~> 1.4.3"
 
   s.add_development_dependency "rake", "~> 13.0.6"
-  s.add_development_dependency "rspec", "~> 3.10"
+  s.add_development_dependency "rspec", "~> 3.11"
 end
