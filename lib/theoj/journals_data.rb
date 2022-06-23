@@ -20,6 +20,16 @@ module Theoj
       reviews_repository: "openjournals/jose-reviews",
       deposit_url: "https://joss.theoj.org/papers/api_deposit"
     },
+    jcon: {
+      doi_prefix: "10.21105",
+      url: "https://proceedings.juliacon.org/",
+      name: "The Proceedings of the JuliaCon Conferences",
+      alias: "jcon",
+      launch_date: "2019-07-21",
+      papers_repository: "JuliaCon/juliacon-proceedings-papers",
+      reviews_repository: "JuliaCon/juliacon-proceedings-reviews",
+      deposit_url: "https://joss.theoj.org/papers/api_deposit"
+    },
     test_journal: {
       doi_prefix: "10.21105",
       url: "https://test.joss.theoj.org/",
