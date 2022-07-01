@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.5 (2022-07-01)
+
+- Added configuration for JuliaCon
+
 ## 1.3.4 (2022-05-29)
 
 - Use Faraday v2 (updated Octokit and other dependencies)
