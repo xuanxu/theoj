@@ -28,7 +28,7 @@ module Theoj
       launch_date: "2019-07-21",
       papers_repository: "JuliaCon/juliacon-proceedings-papers",
       reviews_repository: "JuliaCon/juliacon-proceedings-reviews",
-      deposit_url: "https://joss.theoj.org/papers/api_deposit"
+      deposit_url: "https://proceedings.juliacon.org/papers/api_deposit"
     },
     test_journal: {
       doi_prefix: "10.21105",
