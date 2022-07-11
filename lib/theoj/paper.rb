@@ -121,6 +121,7 @@ module Theoj
 
         # Loop through the authors block and build up the affiliation
         authors_metadata.each do |author|
+          author['name'] = author.dup if author['name'].nil?
           affiliation_index = author['affiliation']
           failure "Author (#{author['name']}) is missing affiliation" if affiliation_index.nil?
           begin

@@ -1,7 +1,7 @@
 describe Theoj::Author do
 
   describe "initialization" do
-    it "should parse name" do
+    it "should parse name string" do
       name = "Ellen Louise Ripley"
       author = Theoj::Author.new(name, "0000-0001-2345-6789", nil, {})
 
@@ -9,6 +9,29 @@ describe Theoj::Author do
     end
 
     it "should remove footnotes from the name string" do
+      name = "Arfon Smith^[Corresponding author: arfon@arfon.arf]"
+      author = Theoj::Author.new(name, "0000-0001-2345-6789", nil, {})
+
+      expect(author.name).to eq("Arfon Smith")
+    end
+
+    it "should parse name hash" do
+      name = { "given" => "James", "surname" => "Bond" }
+      author = Theoj::Author.new(name, "0000-0001-2345-6789", nil, {})
+
+      expect(author.name).to eq("James Bond")
+
+      name = { "given" => "Ludwig", "dropping-particle" => "van", "surname" => "Beethoven" }
+      author = Theoj::Author.new(name, "0000-0001-2345-6789", nil, {})
+
+      expect(author.name).to eq("Ludwig Beethoven")
+      expect(author.given_name).to eq("Ludwig")
+      expect(author.middle_name).to eq("van")
+      expect(author.last_name).to eq("Beethoven")
+      expect(author.initials).to eq("L. v.")
+    end
+
+    it "should remove footnotes from the name hash" do
       name = "Arfon Smith^[Corresponding author: arfon@arfon.arf]"
       author = Theoj::Author.new(name, "0000-0001-2345-6789", nil, {})
 

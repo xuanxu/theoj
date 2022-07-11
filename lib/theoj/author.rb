@@ -45,7 +45,19 @@ module Theoj
     private
 
     def parse_name(author_name)
-      @parsed_name = Nameable::Latin.new.parse(strip_footnotes(author_name))
+      if author_name.is_a? Hash
+        g = author_name["given-names"] || author_name["given"] || author_name["first"] || author_name["firstname"]
+        m = author_name["dropping-particle"]
+        s = author_name["surname"] || author_name["family"]
+
+        g = strip_footnotes(g) unless g.nil?
+        s = strip_footnotes(s) unless s.nil?
+
+        @parsed_name = m.nil? ? Nameable::Latin.new(g, s) : Nameable::Latin.new(g, m, s)
+      else
+        @parsed_name = Nameable::Latin.new.parse(strip_footnotes(author_name))
+      end
+
       @name = @parsed_name.to_nameable
     end
 

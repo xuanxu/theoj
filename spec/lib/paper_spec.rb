@@ -164,4 +164,21 @@ describe Theoj::Paper do
       expect(@paper.citation_author).to eq("Bazán et al.")
     end
   end
+
+  describe "authors names parsing" do
+    before do
+      @paper = Theoj::Paper.new("repository", "branch", fixture("parsing_names_format_metadata.md"))
+    end
+
+    it "should work with all available formats" do
+      authors = @paper.authors
+      expect(authors.size).to eq(3)
+      expect(@paper.citation_author).to eq("Beethoven et al.")
+      expect(authors.first.name).to eq("Ludwig Beethoven")
+      expect(authors.first.initials).to eq("L. v.")
+      expect(authors[1].name).to eq("James Bond")
+      expect(authors.last.name).to eq("Ellen Ripley")
+    end
+
+  end
 end
