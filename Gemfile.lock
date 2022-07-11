@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    theoj (1.3.5)
+    theoj (1.3.6)
       faraday (~> 2.3.0)
       github-linguist (~> 7.20.0)
       octokit (~> 4.25)
@@ -26,7 +26,7 @@ GEM
       mini_mime (~> 1.0)
       rugged (~> 1.0)
     mini_mime (1.1.2)
-    octokit (4.25.0)
+    octokit (4.25.1)
       faraday (>= 1, < 3)
       sawyer (~> 0.9)
     openjournals-nameable (1.1.7)

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.6 (2022-07-11)
+
+- Improve parsing os author names
+
 ## 1.3.5 (2022-07-01)
 
 - Added configuration for JuliaCon
