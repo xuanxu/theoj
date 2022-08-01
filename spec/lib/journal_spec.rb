@@ -52,6 +52,18 @@ describe Theoj::Journal do
     end
   end
 
+  describe "#year_volume_issue_for_date" do
+    it "should compute values for the given date" do
+      journal = Theoj::Journal.new(alias: "great_journal")
+      date = Date.parse("2020-07-23T17:15:44.763Z")
+      expected_year = 2020
+      expected_volume = 5
+      expected_issue = 51
+
+      expect(journal.year_volume_issue_for_date(date)).to eq([expected_year, expected_volume, expected_issue])
+    end
+  end
+
   describe "#paper_id_from_issue" do
     it "should use journal alias and the issue's id" do
       journal = Theoj::Journal.new(alias: "great_journal")
