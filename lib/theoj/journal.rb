@@ -43,6 +43,7 @@ module Theoj
     end
 
     def year_volume_issue_for_date(d)
+      d = Date.parse(d) if d.is_a? String
       year = d.year
       volume = year - (launch_year - 1)
       issue = (1 + ((year * 12 + d.month) - (launch_year * 12 + launch_month)))

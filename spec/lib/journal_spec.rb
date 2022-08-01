@@ -62,6 +62,16 @@ describe Theoj::Journal do
 
       expect(journal.year_volume_issue_for_date(date)).to eq([expected_year, expected_volume, expected_issue])
     end
+
+    it "accepts a string" do
+      journal = Theoj::Journal.new(alias: "great_journal")
+      date = "2021-11-26T13:59:57.480Z"
+      expected_year = 2021
+      expected_volume = 6
+      expected_issue = 67
+
+      expect(journal.year_volume_issue_for_date(date)).to eq([expected_year, expected_volume, expected_issue])
+    end
   end
 
   describe "#paper_id_from_issue" do
