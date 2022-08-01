@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0 (2022-08-01)
+
+- Added method to Journal to get year/volume/issue information for any date
+- Submission metadata now takes into account published paper status
+
 ## 1.3.6 (2022-07-11)
 
 - Improve parsing os author names
