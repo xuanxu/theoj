@@ -20,58 +20,105 @@ module Theoj
     # Create the payload to use to post for depositing with Open Journals
     def deposit_payload
       {
-        id: review_issue.issue_id,
+        id: metadata_info[:review_issue_id],
         metadata: Base64.encode64(metadata_payload),
-        doi: paper_doi,
-        archive_doi: review_issue.archive,
+        doi: metadata_info[:doi],
+        archive_doi: metadata_info[:archive_doi],
         citation_string: citation_string,
-        title: paper.title
+        title: metadata_info[:title]
       }
     end
 
     # Create a metadata json payload
     def metadata_payload
-      metadata = {
+      {
         paper: {
-          title: paper.title,
-          tags: paper.tags,
-          languages: paper.languages,
-          authors: paper.authors.collect { |a| a.to_h },
-          doi: paper_doi,
-          archive_doi: review_issue.archive,
-          repository_address: review_issue.target_repository,
-          editor: review_issue.editor,
-          reviewers: review_issue.reviewers.collect(&:strip),
-          volume: journal.current_volume,
-          issue: journal.current_issue,
-          year: journal.current_year,
-          page: review_issue.issue_id,
+          title: metadata_info[:title],
+          tags: metadata_info[:tags],
+          languages: metadata_info[:languages],
+          authors: metadata_info[:authors],
+          doi: metadata_info[:doi],
+          archive_doi: metadata_info[:archive_doi],
+          repository_address: metadata_info[:software_repository_url],
+          editor: metadata_info[:review_editor],
+          reviewers: metadata_info[:reviewers].collect(&:strip),
+          volume: metadata_info[:volume],
+          issue: metadata_info[:issue],
+          year: metadata_info[:year],
+          page: metadata_info[:page]
         }
-      }
-
-      metadata.to_json
+      }.to_json
     end
 
     # Create metadata used to generate PDF/JATS outputs
     def article_metadata
-        metadata = {
-          title: paper.title,
-          tags: paper.tags,
-          authors: paper.authors.collect { |a| a.to_h },
-          doi: paper_doi,
-          software_repository_url: review_issue.target_repository,
-          reviewers: review_issue.reviewers.collect{|r| user_login(r)},
-          volume: journal.current_volume,
-          issue: journal.current_issue,
-          year: journal.current_year,
-          page: review_issue.issue_id,
-          journal_alias: journal.alias,
-          software_review_url: journal.reviews_repository_url(review_issue.issue_id),
-          archive_doi: review_issue.archive,
-          citation_string: citation_string
-        }
+      {
+        title: metadata_info[:title],
+        tags: metadata_info[:tags],
+        authors: metadata_info[:authors],
+        doi: metadata_info[:doi],
+        software_repository_url: metadata_info[:software_repository_url],
+        reviewers: metadata_info[:reviewers].collect{|r| user_login(r)},
+        volume: metadata_info[:volume],
+        issue: metadata_info[:issue],
+        year: metadata_info[:year],
+        page: metadata_info[:page],
+        journal_alias: metadata_info[:journal_alias],
+        software_review_url: metadata_info[:software_review_url],
+        archive_doi: metadata_info[:archive_doi],
+        citation_string: metadata_info[:citation_string],
+        editor: metadata_info[:editor],
+        submitted_at: metadata_info[:submitted_at],
+        published_at: metadata_info[:published_at]
+      }
+    end
 
-        metadata.merge(editor_info, dates_info)
+    def metadata_info
+      @metadata_info ||= all_metadata
+    end
+
+    def deposit!(secret)
+      parameters = deposit_payload.merge(secret: secret)
+      Faraday.post(journal.data[:deposit_url], parameters.to_json, {"Content-Type" => "application/json"})
+    end
+
+    def citation_string
+      metadata_info[:citation_string]
+    end
+
+    def paper_id
+      journal.paper_id_from_issue(review_issue.issue_id)
+    end
+
+    def paper_doi
+      journal.paper_doi_for_id(paper_id)
+    end
+
+    def all_metadata
+      metadata = {
+        title: paper.title,
+        tags: paper.tags,
+        languages: paper.languages,
+        authors: paper.authors.collect { |a| a.to_h },
+        doi: paper_doi,
+        software_repository_url: review_issue.target_repository,
+        review_issue_id: review_issue.issue_id,
+        review_editor: review_issue.editor,
+        reviewers: review_issue.reviewers,
+        volume: journal.current_volume,
+        issue: journal.current_issue,
+        year: journal.current_year,
+        page: review_issue.issue_id,
+        journal_alias: journal.alias,
+        journal_name: journal.name,
+        software_review_url: journal.reviews_repository_url(review_issue.issue_id),
+        archive_doi: review_issue.archive,
+        citation_author: paper.citation_author
+      }
+
+      metadata.merge!(editor_info, dates_info)
+      metadata[:citation_string] = build_citation_string(metadata)
+      metadata
     end
 
     def editor_info
@@ -106,30 +153,24 @@ module Theoj
           dates_info[:submitted_at] = format_date(info[:submitted]) if info[:submitted]
           dates_info[:published_at] = format_date(info[:accepted]) if info[:accepted]
         end
+
+        if dates_info[:published_at]
+          yvi = journal.year_volume_issue_for_date(Date.parse(dates_info[:published_at]))
+          dates_info[:year] = yvi[0]
+          dates_info[:volume] = yvi[1]
+          dates_info[:issue] = yvi[2]
+        end
       end
 
       dates_info
     end
 
-    def deposit!(secret)
-      parameters = deposit_payload.merge(secret: secret)
-      Faraday.post(journal.data[:deposit_url], parameters.to_json, {"Content-Type" => "application/json"})
-    end
-
-    def citation_string
-      paper_year = Time.now.strftime('%Y')
-      "#{paper.citation_author}, (#{paper_year}). #{paper.title}. #{journal.name}, #{journal.current_volume}(#{journal.current_issue}), #{review_issue.issue_id}, https://doi.org/#{paper_doi}"
-    end
-
-    def paper_id
-      journal.paper_id_from_issue(review_issue.issue_id)
-    end
-
-    def paper_doi
-      journal.paper_doi_for_id(paper_id)
-    end
-
     private
+
+    def build_citation_string(metadata)
+      "#{metadata[:citation_author]}, (#{metadata[:year]}). #{metadata[:title]}. #{metadata[:journal_name]}, #{metadata[:volume]}(#{metadata[:issue]}), #{metadata[:review_issue_id]}, https://doi.org/#{metadata[:doi]}"
+    end
+
     def format_date(date_string)
       Date.parse(date_string.to_s).strftime("%Y-%m-%d")
     rescue Date::Error
