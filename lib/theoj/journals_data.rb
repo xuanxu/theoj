@@ -1,3 +1,5 @@
+require "date"
+
 module Theoj
   JOURNALS_DATA = {
     joss: {
