@@ -7,7 +7,7 @@
 
 ## 1.3.6 (2022-07-11)
 
-- Improve parsing os author names
+- Improve parsing of author names
 
 ## 1.3.5 (2022-07-01)
 
