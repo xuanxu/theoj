@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.1 (2022-09-28)
+
+- Added method to Submission to get track information
+
 ## 1.4.0 (2022-08-01)
 
 - Added method to Journal to get year/volume/issue information for any date
