@@ -322,6 +322,22 @@ describe Theoj::Submission do
     end
   end
 
+  describe "#track" do
+    it "should lookup paper's track" do
+      track_info = { name: "Earth Sciences", short_name: "ES", code: 33, label: "Track 33", parameterized: "es"}
+      track_lookup = double(status: 200, body: track_info.to_json)
+      expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/42/lookup_track").and_return(track_lookup)
+
+      expect(@submission.track).to eq(track_info)
+    end
+
+    it "should default to empty values" do
+      expect(Faraday).to receive(:get).with("https://joss.theoj.org/papers/42/lookup_track").and_return(double(status: 500))
+
+      expect(@submission.track).to eq({ name: nil, short_name: nil, code: nil, label: nil, parameterized: nil})
+    end
+  end
+
   describe "#deposit!" do
     it "should call the journal's deposit url" do
       expected_url = @journal.data[:deposit_url]

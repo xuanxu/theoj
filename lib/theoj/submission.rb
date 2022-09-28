@@ -165,6 +165,19 @@ module Theoj
       dates_info
     end
 
+    def track
+      track_info = { name: nil, short_name: nil, code: nil, label: nil, parameterized: nil}
+
+      if review_issue.issue_id
+        track_lookup = Faraday.get(journal.url + "/papers/" + review_issue.issue_id.to_s + "/lookup_track" )
+        if track_lookup.status == 200
+          track_info = JSON.parse(track_lookup.body, symbolize_names: true)
+        end
+      end
+
+      track_info
+    end
+
     private
 
     def build_citation_string(metadata)
