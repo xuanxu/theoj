@@ -2,6 +2,7 @@ require "json"
 require "date"
 require "base64"
 require "faraday"
+require "commonmarker"
 
 module Theoj
   class Submission
@@ -96,7 +97,7 @@ module Theoj
 
     def all_metadata
       metadata = {
-        title: paper.title,
+        title: plaintext(paper.title),
         tags: paper.tags,
         languages: paper.languages,
         authors: paper.authors.collect { |a| a.to_h },
@@ -182,6 +183,10 @@ module Theoj
 
     def build_citation_string(metadata)
       "#{metadata[:citation_author]}, (#{metadata[:year]}). #{metadata[:title]}. #{metadata[:journal_name]}, #{metadata[:volume]}(#{metadata[:issue]}), #{metadata[:review_issue_id]}, https://doi.org/#{metadata[:doi]}"
+    end
+
+    def plaintext(t)
+      CommonMarker.render_doc(t, :DEFAULT).to_plaintext.strip.gsub(" ", " ")
     end
 
     def format_date(date_string)

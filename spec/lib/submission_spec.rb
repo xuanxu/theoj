@@ -59,6 +59,16 @@ describe Theoj::Submission do
     @submission.metadata_info
   end
 
+  it "generates a plain text version of the title" do
+    @submission.paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata_markup_title.md"))
+
+    markup_title = "test\\_lib: Numba implementation of&nbsp;TESTLIB with simulations"
+    expect(@submission.paper.title).to eq(markup_title)
+
+    expected_title = "test_lib: Numba implementation of TESTLIB with simulations"
+    expect(@submission.metadata_info[:title]).to eq(expected_title)
+  end
+
   describe "#citation_string" do
     it "should use journal, paper and review issue info" do
       paper_lookup = double(status: 200, body: { submitted: "24 Nov 2020", accepted: "12 Aug 2021" }.to_json)
