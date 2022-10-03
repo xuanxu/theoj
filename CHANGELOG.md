@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.0 (2022-10-02)
+
+- Added Commonmarker as dependency
+- Submission metadata's title is converted to plain text
+
 ## 1.4.1 (2022-09-28)
 
 - Added method to Submission to get track information
