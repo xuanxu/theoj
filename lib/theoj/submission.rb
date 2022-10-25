@@ -186,7 +186,7 @@ module Theoj
     end
 
     def plaintext(t)
-      CommonMarker.render_doc(t, :DEFAULT).to_plaintext.strip.gsub(" ", " ")
+      CommonMarker.render_doc(t, :DEFAULT).to_plaintext.strip.gsub(" ", " ").gsub("\n", " ")
     end
 
     def format_date(date_string)
