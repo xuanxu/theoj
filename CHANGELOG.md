@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.1 (2022-10-25)
+
+- Remove newlines from paper's title
+- Faraday and Octokit dependencies updated to latest major versions
+
 ## 1.5.0 (2022-10-02)
 
 - Added Commonmarker as dependency
