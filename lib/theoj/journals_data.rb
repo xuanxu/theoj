@@ -28,8 +28,8 @@ module Theoj
       name: "The Proceedings of the JuliaCon Conferences",
       alias: "jcon",
       launch_date: "2019-07-21",
-      papers_repository: "JuliaCon/juliacon-proceedings-papers",
-      reviews_repository: "JuliaCon/juliacon-proceedings-reviews",
+      papers_repository: "JuliaCon/proceedings-papers",
+      reviews_repository: "JuliaCon/proceedings-review",
       deposit_url: "https://proceedings.juliacon.org/papers/api_deposit"
     },
     test_journal: {
