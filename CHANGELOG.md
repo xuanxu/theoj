@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2 (2022-10-29)
+
+- Updated journal data for JuliaCon
+
 ## 1.5.1 (2022-10-25)
 
 - Remove newlines from paper's title
