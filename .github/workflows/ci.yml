@@ -12,8 +12,6 @@ jobs:
         include:
         - ruby-version: 'head'
           failure-allowed: true
-        - ruby-version: 'truffleruby'
-          failure-allowed: true
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
