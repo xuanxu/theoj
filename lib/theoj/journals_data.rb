@@ -31,6 +31,16 @@ module Theoj
       papers_repository: "JuliaCon/proceedings-papers",
       reviews_repository: "JuliaCon/proceedings-review",
       deposit_url: "https://proceedings.juliacon.org/papers/api_deposit"
+    },    
+    resciencec: {
+      doi_prefix: "10.21105",
+      url: "https://resciencec.theoj.org",
+      name: "ReScience C",
+      alias: "resciencec",
+      launch_date: "2015-05-23",
+      papers_repository: "ReScience/ReScienceC-papers",
+      reviews_repository: "ReScience/ReScienceC-reviews",
+      deposit_url: "https://resciencec.theoj.org/papers/api_deposit"
     },
     test_journal: {
       doi_prefix: "10.21105",
@@ -44,4 +54,3 @@ module Theoj
     }
   }
 end
-
