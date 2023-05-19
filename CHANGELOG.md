@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.4 (2022-05-19)
+
+- Added configuration for ReScience C
+
+## 1.5.3 (2023-02-23)
+
+- Added compatibility with Ruby 3.2
+
 ## 1.5.2 (2022-10-29)
 
 - Updated journal data for JuliaCon
