@@ -25,9 +25,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency "octokit", "~> 6.1"
   s.add_dependency "faraday", "~> 2.7"
-  s.add_dependency "faraday-retry", "~> 2.1"
+  s.add_dependency "faraday-retry", "~> 2.2"
   s.add_dependency "openjournals-nameable", "~> 1.1"
-  s.add_dependency "github-linguist", "~> 7.25"
+  s.add_dependency "github-linguist", "~> 7.26"
   s.add_dependency "rugged", "~> 1.6"
   s.add_dependency "commonmarker", "~> 0.23"
 
