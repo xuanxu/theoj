@@ -20,7 +20,7 @@ module Theoj
       launch_date: "2018-03-07",
       papers_repository: "openjournals/jose-papers",
       reviews_repository: "openjournals/jose-reviews",
-      deposit_url: "https://joss.theoj.org/papers/api_deposit"
+      deposit_url: "https://jose.theoj.org/papers/api_deposit"
     },
     jcon: {
       doi_prefix: "10.21105",
