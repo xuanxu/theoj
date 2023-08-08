@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.0 (2023-08-08)
+
+- Fix configuration for JOSE
+
 ## 1.5.4 (2022-05-19)
 
 - Added configuration for ReScience C
