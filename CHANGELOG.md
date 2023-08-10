@@ -1,9 +1,9 @@
 # Changelog
 
-## Unreleased
+## 1.7.0 (2023-08-10)
 
 - Added retract_url values to journals data
-- New class TheOJ::RetractionNotice to create/publish retracion notices and retract papers
+- New class TheOJ::RetractionNotice to create/publish retracion notices to retract papers
 
 ## 1.6.0 (2023-08-08)
 
