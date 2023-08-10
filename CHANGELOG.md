@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added retract_url values to journals data
+
 ## 1.6.0 (2023-08-08)
 
 - Fix configuration for JOSE

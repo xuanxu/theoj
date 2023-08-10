@@ -10,7 +10,8 @@ module Theoj
       launch_date: "2016-05-05",
       papers_repository: "openjournals/joss-papers",
       reviews_repository: "openjournals/joss-reviews",
-      deposit_url: "https://joss.theoj.org/papers/api_deposit"
+      deposit_url: "https://joss.theoj.org/papers/api_deposit",
+      retract_url: "https://joss.theoj.org/papers/api_retract"
     },
     jose: {
       doi_prefix: "10.21105",
@@ -20,7 +21,8 @@ module Theoj
       launch_date: "2018-03-07",
       papers_repository: "openjournals/jose-papers",
       reviews_repository: "openjournals/jose-reviews",
-      deposit_url: "https://jose.theoj.org/papers/api_deposit"
+      deposit_url: "https://jose.theoj.org/papers/api_deposit",
+      retract_url: "https://jose.theoj.org/papers/api_retract"
     },
     jcon: {
       doi_prefix: "10.21105",
@@ -30,7 +32,8 @@ module Theoj
       launch_date: "2019-07-21",
       papers_repository: "JuliaCon/proceedings-papers",
       reviews_repository: "JuliaCon/proceedings-review",
-      deposit_url: "https://proceedings.juliacon.org/papers/api_deposit"
+      deposit_url: "https://proceedings.juliacon.org/papers/api_deposit",
+      retract_url: "https://proceedings.juliacon.org/papers/api_retract"
     },    
     resciencec: {
       doi_prefix: "10.21105",
@@ -40,7 +43,8 @@ module Theoj
       launch_date: "2015-05-23",
       papers_repository: "ReScience/ReScienceC-papers",
       reviews_repository: "ReScience/ReScienceC-reviews",
-      deposit_url: "https://resciencec.theoj.org/papers/api_deposit"
+      deposit_url: "https://resciencec.theoj.org/papers/api_deposit",
+      retract_url: "https://resciencec.theoj.org/papers/api_retract"
     },
     test_journal: {
       doi_prefix: "10.21105",
@@ -50,7 +54,8 @@ module Theoj
       launch_date: "2016-05-05",
       papers_repository: "openjournals/joss-papers-testing",
       reviews_repository: "openjournals/joss-reviews-testing",
-      deposit_url: "https://test.joss.theoj.org/papers/api_deposit"
+      deposit_url: "https://test.joss.theoj.org/papers/api_deposit",
+      retract_url: "https://test.joss.theoj.org/papers/api_retract"
     }
   }
 end
