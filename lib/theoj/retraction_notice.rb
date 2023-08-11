@@ -20,7 +20,7 @@ module Theoj
     def metadata
       {
         title: "Retraction notice for: " + retracted_paper.title,
-        tags: retracted_paper.tags,
+        tags: [retracted_paper.tags].flatten,
         authors: [{ given_name: journal.alias.upcase,
                     last_name: "Editorial Board",
                     affiliation: journal.name}],
