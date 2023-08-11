@@ -14,7 +14,7 @@ module Theoj
         raise Theoj::Error, "Can't find journal #{journal_alias}"
       end
       @journal = Theoj::Journal.new(journal_data)
-      @retracted_paper = PublishedPaper.new(doi)
+      @retracted_paper = Theoj::PublishedPaper.new(doi)
     end
 
     def metadata
