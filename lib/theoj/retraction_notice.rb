@@ -61,7 +61,7 @@ module Theoj
       }.to_json
 
       {
-        doi: metadata[:doi],
+        doi: retracted_paper.doi,
         metadata: Base64.encode64(metadata_payload),
         citation_string: citation_string
       }
