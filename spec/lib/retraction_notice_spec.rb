@@ -96,7 +96,7 @@ describe Theoj::RetractionNotice do
     describe "#deposit_payload" do
       it "should create a valid Open Journals deposit payload for retraction" do
         expected_deposit_payload = {
-          doi: "paper-doiR",
+          doi: "paper-doi",
           metadata: Base64.encode64(
             {
               paper: {
