@@ -30,7 +30,7 @@ module Theoj
         volume: journal.current_volume,
         issue: journal.current_issue,
         year: journal.current_year,
-        page: "#{retracted_paper.page}R",
+        page: retracted_paper.page,
         journal_alias: journal.alias,
         software_review_url: retracted_paper.paper_review,
         archive_doi: retracted_paper.software_archive.to_s.gsub("https://doi.org/", ""),

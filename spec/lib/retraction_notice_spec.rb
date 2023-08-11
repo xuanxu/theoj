@@ -80,7 +80,7 @@ describe Theoj::RetractionNotice do
           volume: @journal.current_volume,
           issue: @journal.current_issue,
           year: @journal.current_year,
-          page: "45678R",
+          page: "45678",
           journal_alias: "test_journal",
           software_review_url: "https://github.com/openjournals/test_journal/issues/5567",
           archive_doi: "10.AAAA/zenodo.33",
@@ -114,11 +114,11 @@ describe Theoj::RetractionNotice do
                 volume: @journal.current_volume,
                 issue: @journal.current_issue,
                 year: @journal.current_year,
-                page: "45678R"
+                page: "45678"
               }
             }.to_json
           ),
-          citation_string: "Editorial Board, (#{@journal.current_year}). Retraction notice for: Test paper. Test Journal, #{@journal.current_volume}(#{@journal.current_issue}), 45678R, https://doi.org/paper-doiR"
+          citation_string: "Editorial Board, (#{@journal.current_year}). Retraction notice for: Test paper. Test Journal, #{@journal.current_volume}(#{@journal.current_issue}), 45678, https://doi.org/paper-doiR"
         }
 
         expect(@retraction_notice.deposit_payload).to eq(expected_deposit_payload)
@@ -126,7 +126,7 @@ describe Theoj::RetractionNotice do
     end
 
     it "should create a valid citation string" do
-      expect(@retraction_notice.citation_string).to eq "Editorial Board, (#{@journal.current_year}). Retraction notice for: Test paper. Test Journal, #{@journal.current_volume}(#{@journal.current_issue}), 45678R, https://doi.org/paper-doiR"
+      expect(@retraction_notice.citation_string).to eq "Editorial Board, (#{@journal.current_year}). Retraction notice for: Test paper. Test Journal, #{@journal.current_volume}(#{@journal.current_issue}), 45678, https://doi.org/paper-doiR"
     end
 
     describe "#deposit!" do
