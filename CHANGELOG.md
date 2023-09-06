@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.0 (2023-09-06)
+
+- Paper file name must be strictly paper.md
+
+
 ## 1.8.0 (2023-08-11)
 
 - Changes in RetractionNotice metadata and deposit call to comply with OJ API
