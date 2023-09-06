@@ -68,7 +68,7 @@ module Theoj
 
       if Dir.exist? search_path
         Find.find(search_path).each do |path|
-          if path =~ /paper\.tex$|paper\.md$/
+          if path =~ /\/paper\.tex$|\/paper\.md$/
             paper_path = path
             break
           end

@@ -116,7 +116,7 @@ describe Theoj::Paper do
 
     it "should return nil if no paper file found" do
       expect(Dir).to receive(:exist?).with("/repo/path/").and_return(true)
-      allow(Find).to receive(:find).with("/repo/path/").and_return(["lib/papers.pdf", "./docs", "app"])
+      allow(Find).to receive(:find).with("/repo/path/").and_return(["lib/papers.pdf", "./whitepaper.md", "./docs", "app"])
 
       paper_path = Theoj::Paper.find_paper_path("/repo/path/")
 
