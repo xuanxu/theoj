@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.1 (2024-01-29)
+
+- Updated dependencies
+
 ## 1.9.0 (2023-09-06)
 
 - Paper file name must be strictly paper.md
