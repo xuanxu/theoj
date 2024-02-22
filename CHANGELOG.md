@@ -4,6 +4,8 @@
 
 - Imroved title formatting
 - Updated dependencies
+- Ruby >= 3.1
+
 
 ## 1.9.1 (2024-01-29)
 
