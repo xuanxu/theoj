@@ -2,7 +2,7 @@
 
 ## 1.9.2 (2024-02-22)
 
-- Imroved title formatting
+- Improved title formatting
 - Updated dependencies
 - Ruby >= 3.1
 
