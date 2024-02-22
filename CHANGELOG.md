@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.2 (2024-02-22)
+
+- Imroved title formatting
+- Updated dependencies
+
 ## 1.9.1 (2024-01-29)
 
 - Updated dependencies
