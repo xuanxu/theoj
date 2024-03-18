@@ -1,11 +1,14 @@
 # Changelog
 
+## 1.10.0 (2024-03-18)
+
+- Allow to load keywords instead of tags in metadata
+
 ## 1.9.2 (2024-02-22)
 
 - Improved title formatting
 - Updated dependencies
 - Ruby >= 3.1
-
 
 ## 1.9.1 (2024-01-29)
 
