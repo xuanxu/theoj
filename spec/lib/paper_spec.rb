@@ -144,6 +144,13 @@ describe Theoj::Paper do
     it "should have bibliography_path" do
       expect(@paper.bibliography_path).to eq("paper-bib-path.bib")
     end
+
+    it "should have tags read from keywords" do
+      paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata_with_keywords.md"))
+
+      expect(paper.title).to eq("Nimbus: Random Forest algorithms with genomic keyword")
+      expect(paper.tags).to eq(["random forest", "genomics", "keyword3", "machine learning", "ruby"])
+    end
   end
 
   describe "paper's authors" do

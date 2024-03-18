@@ -40,7 +40,7 @@ module Theoj
     end
 
     def tags
-      @paper_metadata["tags"]
+      @paper_metadata["tags"] || @paper_metadata["keywords"]
     end
 
     def date
