@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency "openjournals-nameable", "~> 1.2"
   s.add_dependency "github-linguist", "~> 7.28"
   s.add_dependency "rugged", "~> 1.7"
-  s.add_dependency "commonmarker", "~> 1.0.4"
+  s.add_dependency "commonmarker", "~> 1.1.2"
 
   s.add_development_dependency "rake", "~> 13.1.0"
   s.add_development_dependency "rspec", "~> 3.13"
