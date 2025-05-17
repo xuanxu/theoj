@@ -1,3 +1,4 @@
+require "date"
 require "find"
 require "yaml"
 require "rugged"
@@ -108,9 +109,9 @@ module Theoj
         @paper_metadata ||= if paper_path.nil?
           {}
         elsif paper_path.include?('.tex')
-          YAML.load_file(paper_path.gsub('.tex', '.yml'))
+          YAML.safe_load(File.read(paper_path.gsub('.tex', '.yml')), permitted_classes: [Date])
         else
-          YAML.load_file(paper_path)
+          YAML.safe_load(File.read(paper_path), permitted_classes: [Date])
         end
       end
 
