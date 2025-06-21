@@ -187,7 +187,7 @@ module Theoj
 
     def plaintext(t)
       parsed_title = Commonmarker.to_html(t.strip, options:{ render: { hardbreaks: false } })
-      parsed_title.gsub("\n", "").gsub(" ", " ").gsub(/\A<p>/, "").gsub(/<\/p>\z/, "")
+      parsed_title.gsub("\n", "").gsub(" ", " ").gsub(/\A<p>/, "").gsub(/<\/p>\z/, "").gsub("<span data-escaped-char>", "").gsub("<span>", "").gsub(/<\/span>/, "")
     end
 
     def format_date(date_string)
