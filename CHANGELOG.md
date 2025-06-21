@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.11.0 (2025-06-21)
+
+- Remove support for Ruby 3.1
+- Added support for Ruby 3.4
+- Allow dates in the yyyy-mm-dd format
+
 ## 1.10.0 (2024-03-18)
 
 - Allow to load keywords instead of tags in metadata
