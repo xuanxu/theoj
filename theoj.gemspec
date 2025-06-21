@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency "github-linguist", "~> 9.2"
   s.add_dependency "rugged", "~> 1.9"
   s.add_dependency "commonmarker", "~> 2.3"
+  s.add_dependency "base64"
 
   s.add_development_dependency "rake", "~> 13.3"
   s.add_development_dependency "rspec", "~> 3.13"
