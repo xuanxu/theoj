@@ -62,10 +62,10 @@ describe Theoj::Submission do
   it "generates a plain text version of the title" do
     @submission.paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata_markup_title.md"))
 
-    markup_title = "test\\_lib: A mesh generator for automatic, efficient, and robust mesh&nbsp;generation for large-scale cosmological modeling and simulation"
+    markup_title = "test\\_lib: A <code>mesh</code> generator for automatic, efficient, and robust mesh&nbsp;generation for large-scale cosmological modeling and simulation"
     expect(@submission.paper.title).to eq(markup_title)
 
-    expected_title = "test_lib: A mesh generator for automatic, efficient, and robust mesh generation for large-scale cosmological modeling and simulation"
+    expected_title = "test_lib: A mesh generator for automatic, efficient, and robust mesh generation for large-scale cosmological modeling and simulation"
     expect(@submission.metadata_info[:title]).to eq(expected_title)
   end
 
