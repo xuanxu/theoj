@@ -1,5 +1,5 @@
 ---
-title: 'test\_lib: A mesh generator for automatic, efficient, and robust mesh&nbsp;generation for large-scale cosmological modeling and simulation'
+title: 'test\_lib: A <code>mesh generator</code> for automatic, efficient, and robust mesh&nbsp;generation for <span>large-scale</span> cosmological modeling and simulation'
 tags:
   - Python
   - electronic structure theory
