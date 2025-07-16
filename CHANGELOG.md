@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.1 (2025-07-16)
+
+- Remove code tags & html comments from title in submission metadata
+
 ## 1.11.0 (2025-06-21)
 
 - Remove support for Ruby 3.1
