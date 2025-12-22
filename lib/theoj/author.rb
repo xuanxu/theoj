@@ -40,7 +40,15 @@ module Theoj
     end
 
     def citation_last_name
-      @literal_name || last_name
+      return @literal_name unless @literal_name.to_s.strip.empty?
+
+      name_parts = [@non_dropping_particle, @surname, @suffix].map do |part|
+        part.to_s.strip
+      end.reject(&:empty?)
+
+      return @surname if name_parts.empty?
+
+      name_parts.join(" ")
     end
 
     def initials

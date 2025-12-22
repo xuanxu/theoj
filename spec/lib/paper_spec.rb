@@ -180,7 +180,7 @@ describe Theoj::Paper do
     it "should work with all available formats" do
       authors = @paper.authors
       expect(authors.size).to eq(3)
-      expect(@paper.citation_author).to eq("van Beethoven et al.")
+      expect(@paper.citation_author).to eq("Beethoven et al.")
       expect(authors.first.name).to eq("Ludwig van Beethoven")
       expect(authors.first.initials).to eq("L. v.")
       expect(authors[1].name).to eq("James Bond")
