@@ -25,7 +25,17 @@ module Theoj
     end
 
     def last_name
-      @parsed_name.last
+      name_parts = [@non_dropping_particle, @parsed_name.last, @parsed_name.suffix].map do |part|
+        part.to_s.strip
+      end.reject(&:empty?)
+
+      fallback = @parsed_name.last || @literal_name
+
+      name_parts.empty? ? fallback : name_parts.join(" ")
+    end
+
+    def citation_last_name
+      @literal_name || last_name
     end
 
     def initials
@@ -46,19 +56,53 @@ module Theoj
 
     def parse_name(author_name)
       if author_name.is_a? Hash
-        g = author_name["given-names"] || author_name["given"] || author_name["first"] || author_name["firstname"]
-        m = author_name["dropping-particle"]
-        s = author_name["surname"] || author_name["family"]
+        name_parts = normalize_name_parts(author_name)
+        given_names = strip_footnotes(name_parts[:given_names])
+        dropping_particle = strip_footnotes(name_parts[:dropping_particle])
+        @non_dropping_particle = strip_footnotes(name_parts[:non_dropping_particle]) || dropping_particle
+        display_dropping_particle = name_parts[:non_dropping_particle].nil? ? nil : dropping_particle
+        surname = strip_footnotes(name_parts[:surname])
+        suffix = strip_footnotes(name_parts[:suffix])
+        @literal_name = strip_footnotes(name_parts[:literal])
 
-        g = strip_footnotes(g) unless g.nil?
-        s = strip_footnotes(s) unless s.nil?
+        surname_with_particle = [@non_dropping_particle, surname].compact.reject(&:empty?).join(" ")
+        name_hash = {
+          first: given_names,
+          middle: dropping_particle,
+          last: surname_with_particle,
+          suffix: suffix
+        }
 
-        @parsed_name = m.nil? ? Nameable::Latin.new(g, s) : Nameable::Latin.new(g, m, s)
+        @parsed_name = Nameable::Latin.new(name_hash)
+        @name = @literal_name || build_display_name(given_names, display_dropping_particle, @non_dropping_particle, surname, suffix)
       else
-        @parsed_name = Nameable::Latin.new.parse(strip_footnotes(author_name))
+        parsed_name = Nameable::Latin.new.parse(strip_footnotes(author_name))
+        @parsed_name = parsed_name
+        @name = parsed_name.to_s
       end
+    end
 
-      @name = @parsed_name.to_nameable
+    def normalize_name_parts(author_hash)
+      {
+        literal: fetch_name_field(author_hash, %w[literal]),
+        given_names: fetch_name_field(author_hash, ["given-names", "given", "first", "firstname"]),
+        dropping_particle: fetch_name_field(author_hash, ["dropping-particle"]),
+        non_dropping_particle: fetch_name_field(author_hash, ["non-dropping-particle"]),
+        surname: fetch_name_field(author_hash, ["surname", "family"]),
+        suffix: fetch_name_field(author_hash, ["suffix"])
+      }
+    end
+
+    def fetch_name_field(name_hash, keys)
+      keys.map do |key|
+        name_hash[key] || name_hash[key.to_sym]
+      end.compact.first
+    end
+
+    def build_display_name(given_names, dropping_particle, non_dropping_particle, surname, suffix)
+      [given_names, dropping_particle, non_dropping_particle, surname, suffix].map do |part|
+        part.to_s.strip
+      end.reject(&:empty?).join(" ")
     end
 
     # Input: Arfon Smith^[Corresponding author: arfon@example.com]

@@ -180,12 +180,26 @@ describe Theoj::Paper do
     it "should work with all available formats" do
       authors = @paper.authors
       expect(authors.size).to eq(3)
-      expect(@paper.citation_author).to eq("Beethoven et al.")
-      expect(authors.first.name).to eq("Ludwig Beethoven")
+      expect(@paper.citation_author).to eq("van Beethoven et al.")
+      expect(authors.first.name).to eq("Ludwig van Beethoven")
       expect(authors.first.initials).to eq("L. v.")
       expect(authors[1].name).to eq("James Bond")
       expect(authors.last.name).to eq("Ellen Ripley")
     end
 
+  end
+
+  describe "citation author formatting" do
+    it "includes non-dropping particles when citing" do
+      paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata_non_dropping.md"))
+
+      expect(paper.citation_author).to eq("de Broglie et al.")
+    end
+
+    it "falls back to literal names when initials are not available" do
+      paper = Theoj::Paper.new("repository", "branch", fixture("paper_metadata_literal_name.md"))
+
+      expect(paper.citation_author).to eq("The JOSS Team")
+    end
   end
 end

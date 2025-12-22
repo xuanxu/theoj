@@ -24,11 +24,28 @@ describe Theoj::Author do
       name = { "given" => "Ludwig", "dropping-particle" => "van", "surname" => "Beethoven" }
       author = Theoj::Author.new(name, "0000-0001-2345-6789", nil, {})
 
-      expect(author.name).to eq("Ludwig Beethoven")
+      expect(author.name).to eq("Ludwig van Beethoven")
       expect(author.given_name).to eq("Ludwig")
-      expect(author.middle_name).to eq("van")
-      expect(author.last_name).to eq("Beethoven")
+      expect(author.middle_name).to be_nil
+      expect(author.last_name).to eq("van Beethoven")
       expect(author.initials).to eq("L. v.")
+    end
+
+    it "keeps non-dropping particles with the surname and suffix" do
+      name = { "given" => "Louis", "non-dropping-particle" => "de", "family" => "Broglie", "suffix" => "Jr." }
+      author = Theoj::Author.new(name, nil, nil, {})
+
+      expect(author.name).to eq("Louis de Broglie Jr.")
+      expect(author.last_name).to eq("de Broglie Jr.")
+      expect(author.citation_last_name).to eq("de Broglie Jr.")
+    end
+
+    it "prefers literal name when provided" do
+      name = { "literal" => "The JOSS Team" }
+      author = Theoj::Author.new(name, nil, nil, {})
+
+      expect(author.name).to eq("The JOSS Team")
+      expect(author.citation_last_name).to eq("The JOSS Team")
     end
 
     it "should remove footnotes from the name hash" do
