@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.12.0 (2026-01-20)
+
+- Update name parsing to match JOSS' Pandoc pipeline
+
 ## 1.11.1 (2025-07-16)
 
 - Remove code tags & html comments from title in submission metadata
