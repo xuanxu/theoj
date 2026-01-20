@@ -26,14 +26,14 @@ module Theoj
     end
 
     def citation_author
-      surname = authors.first.last_name
-      initials = authors.first.initials
+      first_author = authors.first
+      surname = first_author.citation_last_name.to_s
+      initials = first_author.initials
 
-      if authors.size > 1
-        return "#{surname} et al."
-      else
-        return "#{surname}, #{initials}"
-      end
+      return "#{surname} et al." if authors.size > 1
+      return surname if initials.to_s.strip.empty?
+
+      "#{surname}, #{initials}"
     end
 
     def title

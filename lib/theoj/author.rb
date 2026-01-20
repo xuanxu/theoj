@@ -17,19 +17,51 @@ module Theoj
     end
 
     def given_name
-      @parsed_name.first
+      return nil if @given_names.to_s.strip.empty?
+
+      @given_names.to_s.split(/\s+/).first
     end
 
     def middle_name
-      @parsed_name.middle
+      return nil if @middle_names.to_s.strip.empty?
+
+      @middle_names
     end
 
     def last_name
-      @parsed_name.last
+      particle = @non_dropping_particle.to_s.strip.empty? ? @dropping_particle : @non_dropping_particle
+      name_parts = [particle, @surname, @suffix].map do |part|
+        part.to_s.strip
+      end.reject(&:empty?)
+
+      fallback = @surname || @literal_name
+
+      name_parts.empty? ? fallback : name_parts.join(" ")
+    end
+
+    def citation_last_name
+      return @literal_name unless @literal_name.to_s.strip.empty?
+
+      name_parts = [@non_dropping_particle, @surname, @suffix].map do |part|
+        part.to_s.strip
+      end.reject(&:empty?)
+
+      return @surname if name_parts.empty?
+
+      name_parts.join(" ")
     end
 
     def initials
-      [@parsed_name.first, @parsed_name.middle].compact.map {|v| v[0] + "."} * ' '
+      initials_parts = []
+      first_name = given_name.to_s
+      initials_parts << "#{first_name[0]}." unless first_name.empty?
+
+      middle_for_initials = @middle_names.to_s.strip.empty? ? @dropping_particle : @middle_names
+      unless middle_for_initials.to_s.strip.empty?
+        initials_parts.concat(middle_for_initials.split(/\s+/).map { |v| "#{v[0]}." })
+      end
+
+      initials_parts.compact.join(" ")
     end
 
     def to_h
@@ -46,24 +78,71 @@ module Theoj
 
     def parse_name(author_name)
       if author_name.is_a? Hash
-        g = author_name["given-names"] || author_name["given"] || author_name["first"] || author_name["firstname"]
-        m = author_name["dropping-particle"]
-        s = author_name["surname"] || author_name["family"]
+        name_parts = normalize_name_parts(author_name)
+        given_names = strip_footnotes(name_parts[:given_names])
+        dropping_particle = strip_footnotes(name_parts[:dropping_particle])
+        @dropping_particle = dropping_particle
+        @non_dropping_particle = strip_footnotes(name_parts[:non_dropping_particle])
+        display_particle = @non_dropping_particle || dropping_particle
+        @surname = strip_footnotes(name_parts[:surname])
+        @suffix = strip_footnotes(name_parts[:suffix])
+        literal_name = strip_footnotes(name_parts[:literal])
+        @literal_name = literal_name unless literal_name.to_s.strip.empty?
+        @middle_names = nil
+        @given_names = given_names
 
-        g = strip_footnotes(g) unless g.nil?
-        s = strip_footnotes(s) unless s.nil?
+        surname_with_particle = [@non_dropping_particle || @dropping_particle, @surname].compact.reject(&:empty?).join(" ")
+        name_hash = {
+          first: given_names,
+          middle: dropping_particle,
+          last: surname_with_particle,
+          suffix: @suffix
+        }
 
-        @parsed_name = m.nil? ? Nameable::Latin.new(g, s) : Nameable::Latin.new(g, m, s)
+        @parsed_name = Nameable::Latin.new(name_hash)
+        @name = @literal_name || build_display_name(given_names, display_particle, nil, @surname, @suffix)
       else
-        @parsed_name = Nameable::Latin.new.parse(strip_footnotes(author_name))
+        parsed_name = Nameable::Latin.new.parse(strip_footnotes(author_name))
+        @parsed_name = parsed_name
+        @given_names = parsed_name.first
+        @middle_names = parsed_name.middle
+        @surname = parsed_name.last
+        @suffix = parsed_name.suffix
+        @dropping_particle = nil
+        @non_dropping_particle = nil
+        @literal_name = nil
+        @name = build_display_name(@given_names, nil, nil, @surname, @suffix)
       end
+    end
 
-      @name = @parsed_name.to_nameable
+    def normalize_name_parts(author_hash)
+      {
+        literal: fetch_name_field(author_hash, %w[literal]),
+        given_names: fetch_name_field(author_hash, ["given-names", "given", "first", "firstname"]),
+        dropping_particle: fetch_name_field(author_hash, ["dropping-particle"]),
+        non_dropping_particle: fetch_name_field(author_hash, ["non-dropping-particle"]),
+        surname: fetch_name_field(author_hash, ["surname", "family"]),
+        suffix: fetch_name_field(author_hash, ["suffix"])
+      }
+    end
+
+    def fetch_name_field(name_hash, keys)
+      keys.map do |key|
+        name_hash[key] || name_hash[key.to_sym]
+      end.compact.first
+    end
+
+    def build_display_name(given_names, dropping_particle, non_dropping_particle, surname, suffix)
+      [given_names, dropping_particle, non_dropping_particle, surname, suffix].map do |part|
+        part.to_s.strip
+      end.reject(&:empty?).join(" ")
     end
 
     # Input: Arfon Smith^[Corresponding author: arfon@example.com]
     # Output: Arfon Smith
     def strip_footnotes(author_name)
+      return nil if author_name.nil?
+
       author_name.to_s[AUTHOR_FOOTNOTE_REGEX]
     end
 
