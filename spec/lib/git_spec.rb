@@ -11,7 +11,7 @@ describe "Git methods" do
   describe "#clone_repo" do
     it "should return true when succesfully cloned a repo to a local path" do
       expect(Open3).to receive(:capture3).
-                       with("git clone http:/repository-url.com ./local/folder").
+                       with("git", "clone", "--", "http:/repository-url.com", "./local/folder").
                        and_return(["OK", "", OpenStruct.new(success?: true)])
       expect(subject.clone_repo("http:/repository-url.com", "./local/folder")).to be_truthy
     end
@@ -26,7 +26,7 @@ describe "Git methods" do
 
     it "should return false if cloning fails" do
       expect(Open3).to receive(:capture3).
-                       with("git clone http://www.wrong-url.com ./local/folder").
+                       with("git", "clone", "--", "http://www.wrong-url.com", "./local/folder").
                        and_return(["", "Invalid URL", OpenStruct.new(success?: false)])
       expect(subject.clone_repo("http://www.wrong-url.com", "./local/folder")).to be_falsy
     end
@@ -35,7 +35,7 @@ describe "Git methods" do
   describe "#change_branch" do
     it "should switch branch and return true" do
       expect(Open3).to receive(:capture3).
-                       with("git -C local/folder switch paper-branch").
+                       with("git", "-C", "local/folder", "switch", "--", "paper-branch").
                        and_return(["OK", "", OpenStruct.new(success?: true)])
 
       expect(subject.change_branch("paper-branch", "local/folder")).to be_truthy
@@ -43,7 +43,7 @@ describe "Git methods" do
 
     it "should return false if command fails" do
       expect(Open3).to receive(:capture3).
-                       with("git -C local/folder switch newbranch").
+                       with("git", "-C", "local/folder", "switch", "--", "newbranch").
                        and_return(["", "No such file or directory", OpenStruct.new(success?: false)])
 
       expect(subject.change_branch("newbranch", "local/folder")).to be_falsy
